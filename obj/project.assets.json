@@ -428,25 +428,34 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\A140953\\.nuget\\packages\\": {}
+    "C:\\Users\\A214163\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\A140953\\Documents\\RevatureTraining\\DotNetBootCamp\\BrandonWelchProjects\\Projects\\Group1\\Group1.csproj",
+      "projectUniqueName": "C:\\Users\\A214163\\Documents\\RevatureTraining\\Group1\\Group1.csproj",
       "projectName": "Group1",
-      "projectPath": "C:\\Users\\A140953\\Documents\\RevatureTraining\\DotNetBootCamp\\BrandonWelchProjects\\Projects\\Group1\\Group1.csproj",
-      "packagesPath": "C:\\Users\\A140953\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\A140953\\Documents\\RevatureTraining\\DotNetBootCamp\\BrandonWelchProjects\\Projects\\Group1\\obj\\",
+      "projectPath": "C:\\Users\\A214163\\Documents\\RevatureTraining\\Group1\\Group1.csproj",
+      "packagesPath": "C:\\Users\\A214163\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\A214163\\Documents\\RevatureTraining\\Group1\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\A140953\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\A214163\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://packagesource": {}
       },
       "frameworks": {
         "net8.0": {
