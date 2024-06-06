@@ -1,10 +1,13 @@
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 using KittyCity.Models;
 
 namespace KittyCity.Data
 {
-    class AppDbContext : DbContext
+   public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
         // We provide the models through the DbSet<'modle name'> fields
         public DbSet<Login> Logins { get; set; }
         public DbSet<Person> Persons { get; set; }
