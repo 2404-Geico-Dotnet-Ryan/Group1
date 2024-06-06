@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Hj04aXliK6F0Nzf/RtJFgoqiR+X53AN0WThUUWIepLjSDz7h9rMZ+pAWRJ8oBmm4VP/P1capzgG4Z7fXV3en2Q==",
+  "dgSpecHash": "SM0HnxALI7utVCbdltgg9qNkBYC2ShnFu/QLhHANwOfrBiFW7Qct4DF/MLGXn9U2cj4NvSW8q2RCZ3KBbBee2Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\U59A24\\source\\classrepos\\Group1\\Group1.csproj",
+  "projectFilePath": "c:\\Users\\U59A24\\source\\classrepos\\Group1\\Group1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\U59A24\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\U59A24\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
