@@ -18,6 +18,7 @@ namespace KittyCity.Services
                     .Select(l => new LoginDTO
                     {
                         UserName = l.UserName,
+                        UserPassword = l.UserPassword,
                         PersonId = l.PersonId
                     }).ToList();
 
@@ -29,6 +30,7 @@ namespace KittyCity.Services
             var login = _context.Logins.Find(LoginId);
             var loginDto = new LoginDTO{
                 UserName = login.UserName,
+                UserPassword = login.UserPassword,
                 PersonId = login.PersonId
             };
 
@@ -44,7 +46,7 @@ namespace KittyCity.Services
                     UserName = loginDto.UserName,
                     UserPassword = loginDto.UserPassword,
                     PersonId = loginDto.PersonId,
-                    AccessLevel = loginDto.AccessLevel // Is this defaulted? may not need this.
+                    // AccessLevel = loginDto.AccessLevel // Is this defaulted? may not need this.
                 };
                 _context.Logins.Add(login);
                 _context.SaveChanges();
