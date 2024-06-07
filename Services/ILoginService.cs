@@ -1,15 +1,18 @@
+using KittyCity.DTOs;
+using KittyCity.Models;
+
 namespace KittyCity.Services
 {
     public interface ILoginService
     {
-        // IEnumerable<LoginDTO> GetAllLogins();
+        IEnumerable<LoginDTO> GetAllLogins();
 
-        // LoginDTO GetLoginById(int LoginId);
+        LoginDTO GetLoginById(int LoginId);
 
-        // Login CreateLogin(LoginDTO loginDto);
+        Login CreateLogin(LoginDTO loginDto);
 
-        // void UpdateLogin(int LoginId, LoginDTO updatedLogin);
+        void UpdateLogin(int LoginId, LoginDTO updatedLogin);
 
-        // void DeleteLogin(int LoginId);
+        void DeleteLogin(int LoginId);
     }
 }
