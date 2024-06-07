@@ -5,7 +5,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Project2 changes
-appsettings.json
+# appsettings.json
+Migrations/
 
 # User-specific files
 *.rsuser
