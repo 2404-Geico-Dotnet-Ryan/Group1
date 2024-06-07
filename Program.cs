@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IVisitService, VisitService>();
-//builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
