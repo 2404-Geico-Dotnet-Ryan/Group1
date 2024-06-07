@@ -12,7 +12,9 @@ namespace KittyCity.DTOs
     public class LoginDTO
     {
         public string? UserName { get; set; }
+        public string? UserPassword { get; set; }
         public int PersonId {get;set;}
+        public int AccessLevel { get; set; }
     }
 
     public class PetDTO
