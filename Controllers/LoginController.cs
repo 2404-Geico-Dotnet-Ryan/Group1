@@ -49,5 +49,19 @@ namespace KittyCity.Controllers
             return Ok();
         }
 
+        // POST: /Users/login
+        // Logs in a user
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginDTO>> Login(LoginDTO userLogin)
+        {
+            var login = await _loginService.LoginUser(userLogin);
+
+            if (login == null)
+            {
+                return Unauthorized();
+            }
+            return login;
+        }
+
     }
 }
