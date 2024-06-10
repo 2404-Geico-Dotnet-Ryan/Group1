@@ -1,5 +1,6 @@
 using KittyCity.DTOs;
 using KittyCity.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KittyCity.Services
 {
@@ -14,5 +15,6 @@ namespace KittyCity.Services
         void UpdateLogin(int LoginId, LoginDTO updatedLogin);
 
         void DeleteLogin(int LoginId);
+        Task<ActionResult<LoginDTO>> LoginUser(LoginDTO userLogin);
     }
 }

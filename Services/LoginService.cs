@@ -1,6 +1,8 @@
 using KittyCity.Data;
 using KittyCity.DTOs;
 using KittyCity.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KittyCity.Services
 {
@@ -84,6 +86,25 @@ namespace KittyCity.Services
 
             _context.Logins.Remove(login);
             _context.SaveChanges();
+        }
+
+        public async Task<ActionResult<LoginDTO>> LoginUser(LoginDTO userLogin)
+        {
+            // Find the user by username and password
+            var login = await _context.Logins.FirstOrDefaultAsync(l => l.UserName == userLogin.UserName && l.UserPassword == userLogin.UserPassword);
+
+            if (login == null)
+            {
+                return null; // Indicate failure to find the user
+            }
+
+            var loginDto = new LoginDTO{
+                UserName = login.UserName,
+                UserPassword = login.UserPassword,
+                PersonId = login.PersonId
+            };
+
+            return loginDto;
         }
     }
 }
