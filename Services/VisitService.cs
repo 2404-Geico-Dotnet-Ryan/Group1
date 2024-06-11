@@ -7,9 +7,7 @@ namespace KittyCity.Services
 {
     public class VisitService : IVisitService
     {
-
         private readonly AppDbContext _context;
-
 
         public VisitService(AppDbContext context)
         {
@@ -23,11 +21,13 @@ namespace KittyCity.Services
                 var visit = new Visit
                 {
                     VisitId = VisitDto.VisitId,
+                    PetId = VisitDto.PetId,
+                    PersonId = VisitDto.PersonId,
                     Weight = VisitDto.Weight,
                     Age = VisitDto.Age,
                     InSidePet = VisitDto.InSidePet,
-                    SeenBy = VisitDto.SeenBy,
-                    PetId = VisitDto.PetId,
+                    AppointmentDate = DateTime.Now,
+                    SeenBy = VisitDto.SeenBy
                 };
 
                 _context.Visits.Add(visit);
@@ -67,12 +67,13 @@ namespace KittyCity.Services
                 .Select(u => new VisitDTO
                 {
                     VisitId = u.VisitId,
+                    PetId = u.PetId,
+                    PersonId = u.PersonId,
                     Weight = u.Weight,
                     Age = u.Age,
                     InSidePet = u.InSidePet,
-                    SeenBy = u.SeenBy,
-                    PetId = u.PetId,
-                    
+                    AppointmentDate = u.AppointmentDate,
+                    SeenBy = u.SeenBy
                 }).ToList();
 
             return visits;
@@ -87,11 +88,13 @@ namespace KittyCity.Services
                 var visitDto = new VisitDTO
                 {
                     VisitId = visit.VisitId,
+                    PetId = visit.PetId,
+                    PersonId = visit.PersonId,
                     Weight = visit.Weight,
                     Age = visit.Age,
                     InSidePet = visit.InSidePet,
-                    SeenBy = visit.SeenBy,
-                    PetId = visit.PetId,
+                    AppointmentDate = visit.AppointmentDate,
+                    SeenBy = visit.SeenBy
                 };
 
                 return visitDto;
@@ -109,11 +112,13 @@ namespace KittyCity.Services
             if (visit != null)
             {
                 visit.VisitId = UpdatedVisit.VisitId;
+                visit.PetId = UpdatedVisit.PetId;
+                visit.PersonId = UpdatedVisit.PersonId;
                 visit.Weight = UpdatedVisit.Weight;
                 visit.Age = UpdatedVisit.Age;
                 visit.InSidePet = UpdatedVisit.InSidePet;
+                visit.AppointmentDate = DateTime.Now;
                 visit.SeenBy = UpdatedVisit.SeenBy;
-                visit.PetId = UpdatedVisit.PetId;
 
                 _context.Visits.Update(visit);
                 _context.SaveChanges();

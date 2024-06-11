@@ -22,7 +22,6 @@ namespace KittyCity.Services
             {
                 var pet = new Pet
                 {
-                    //PetId = PetDto.Id,
                 PersonId = PetDto.PersonId,
                 PetName = PetDto.PetName,
                 Color = PetDto.Color,
@@ -31,9 +30,9 @@ namespace KittyCity.Services
                 Weight = PetDto.Weight,
                 Age = PetDto.Age,
                 InSidePet = PetDto.InSidePet,
-                //AppointmentDate = PetDto.AppointmentDate,
-               // SeenBy = PetDto.SeenBy,
-               // RainbowBridgeDate = PetDto.RainbowBridgeDate,
+                AppointmentDate = DateTime.Now,
+                SeenBy = PetDto.SeenBy,
+                RainbowBridgeDate = "0"
                 };
 
                 _context.Pets.Add(pet);
@@ -53,7 +52,7 @@ namespace KittyCity.Services
             var pets = _context.Pets
                 .Select(p => new PetDTO
                 {
-                  //  PetId = p.PetId,
+                    PetId = p.PetId,
                     PersonId = p.PersonId,
                     PetName = p.PetName,
                     Color = p.Color,
@@ -62,9 +61,9 @@ namespace KittyCity.Services
                     Weight = p.Weight,
                     Age = p.Age,
                     InSidePet = p.InSidePet,
-                   // AppointmentDate = p.AppointmentDate,
-                  //  SeenBy = p.SeenBy,
-                  //  RainbowBridgeDate = p.RainbowBridgeDate,
+                    AppointmentDate = p.AppointmentDate,
+                    SeenBy = p.SeenBy,
+                    RainbowBridgeDate = p.RainbowBridgeDate
                 }).ToList();
 
             return pets;
@@ -79,7 +78,7 @@ namespace KittyCity.Services
             {
                 var petDto = new PetDTO
                 {
-                   // PetId = pet.PetId,
+                    PetId = pet.PetId,
                     PersonId = pet.PersonId,
                     PetName = pet.PetName,
                     Color = pet.Color,
@@ -88,9 +87,9 @@ namespace KittyCity.Services
                     Weight = pet.Weight,
                     Age = pet.Age,
                     InSidePet = pet.InSidePet,
-                   // AppointmentDate = pet.AppointmentDate,
-                   // SeenBy = pet.SeenBy,
-                   // RainbowBridgeDate = pet.RainbowBridgeDate
+                    AppointmentDate = pet.AppointmentDate,
+                    SeenBy = pet.SeenBy,
+                    RainbowBridgeDate = pet.RainbowBridgeDate
                 };
 
                 return petDto;
@@ -108,7 +107,7 @@ namespace KittyCity.Services
 
             if (pet != null)
             {
-                //pet.PetId = UpdatedPet.PetId;
+                pet.PetId = UpdatedPet.PetId;
                 pet.PersonId = UpdatedPet.PersonId;
                 pet.PetName = UpdatedPet.PetName;
                 pet.Color = UpdatedPet.Color;
@@ -117,9 +116,9 @@ namespace KittyCity.Services
                 pet.Weight = UpdatedPet.Weight;
                 pet.Age = UpdatedPet.Age;
                 pet.InSidePet = UpdatedPet.InSidePet;
-                //pet.AppointmentDate = UpdatedPet.AppointmentDate;
-               // pet.SeenBy = UpdatedPet.SeenBy;
-               // pet.RainbowBridgeDate = UpdatedPet.RainbowBridgeDate;
+                pet.AppointmentDate = DateTime.Now;
+                pet.SeenBy = UpdatedPet.SeenBy;
+                pet.RainbowBridgeDate = UpdatedPet.RainbowBridgeDate;
 
                 _context.Pets.Update(pet);
                 _context.SaveChanges();

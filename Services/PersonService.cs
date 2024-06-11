@@ -22,11 +22,11 @@ namespace KittyCity.Services
                 var person = new Person
                 {
                 PersonId = PersonDto.PersonId,
-                // PersonType = PersonDto.PersonType,
+                PersonType = PersonDto.PersonType,
                 FirstName = PersonDto.FirstName,
                 LastName = PersonDto.LastName,
                 PhoneNum = PersonDto.PhoneNum,
-                // JobTitle = PersonDto.JobTitle
+                JobTitle = PersonDto.JobTitle
                 };
 
                 _context.Persons.Add(person);
@@ -46,11 +46,11 @@ namespace KittyCity.Services
                 .Select(p => new PersonDTO
                 {
                   PersonId = p.PersonId,
-                //   PersonType = p.PersonType,
+                  PersonType = p.PersonType,
                   FirstName = p.FirstName,
                   LastName = p.LastName,
                   PhoneNum = p.PhoneNum,
-                //   JobTitle = p.JobTitle,
+                  JobTitle = p.JobTitle
                 }).ToList();
 
             return persons;
@@ -65,11 +65,11 @@ namespace KittyCity.Services
                 var personDto = new PersonDTO
                 {
                  PersonId = person.PersonId,
-                //  PersonType = person.PersonType,
+                 PersonType = person.PersonType,
                  FirstName = person.FirstName,
                  LastName = person.LastName,
                  PhoneNum = person.PhoneNum,
-                //  JobTitle = person.JobTitle,
+                 JobTitle = person.JobTitle
                  };
 
                 return personDto;
@@ -87,11 +87,11 @@ namespace KittyCity.Services
             if (person != null)
             {
                person.PersonId = UpdatedPerson.PersonId;
-            //    person.PersonType = UpdatedPerson.PersonType;
+               person.PersonType = UpdatedPerson.PersonType;
                person.FirstName = UpdatedPerson.FirstName;
                person.LastName = UpdatedPerson.LastName;
                person.PhoneNum = UpdatedPerson.PhoneNum;
-            //    person.JobTitle = UpdatedPerson.JobTitle;
+               person.JobTitle = UpdatedPerson.JobTitle;
                
                 _context.Persons.Update(person);
                 _context.SaveChanges();
