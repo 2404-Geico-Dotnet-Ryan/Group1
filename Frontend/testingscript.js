@@ -7,6 +7,7 @@ let current_user = {};
 // User Container Div
 const userContainerDiv = document.querySelector("#user-authorization-container");
 const allPetsContainerDiv = document.querySelector("#all-pets-container");
+const allPersonsContainerDiv = document.querySelector("#all-persons-container");
 
 //-----------------------------------//
 // Login Container Creation Function //
@@ -473,7 +474,16 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
 // in the API and Script before you actually use them in your website    //
 //-----------------------------------------------------------------------//
 
-async function GetAllPerson(){
+async function GenerateAllPersonsContainer(){
+
+    let persons = await GetAllPersons();
+    for (const person of persons) {
+        let elementCreated = GeneratePersonElement(person);
+        allPersonsContainerDiv.appendChild(elementCreated);
+    }
+}
+
+async function GetAllPersons(){
     try{
         let response = await fetch(`${BASE_URL}/Person`);
         let data = await response.json();
@@ -483,6 +493,44 @@ async function GetAllPerson(){
         console.error(Error);
     }
 }
+
+function GeneratePersonElement(person)
+{
+    let personElementDiv = document.createElement("div");
+    personElementDiv.id = `person-${person.personId}`;
+
+    let personIdLabel = document.createElement("h5");
+    personIdLabel.textContent = person.personId;
+
+    let personTypeLabel = document.createElement("h5");
+    personTypeLabel.textContent = person.personType;
+
+    let personFirstNameLabel = document.createElement("h5");
+    personFirstNameLabel.textContent = person.firstName;
+
+    let personLastNameLabel = document.createElement("h5");
+    personLastNameLabel.textContent = person.lastName;
+
+    let personPhoneNumLabel = document.createElement("h5");
+    personPhoneNumLabel.textContent = person.phoneNum;
+
+    let personJobTitleLabel = document.createElement("h5");
+    personJobTitleLabel.textContent = person.jobTitle;
+
+    personElementDiv.appendChild(personIdLabel);
+    personElementDiv.appendChild(personTypeLabel);
+    personElementDiv.appendChild(personFirstNameLabel);
+    personElementDiv.appendChild(personLastNameLabel);
+    personElementDiv.appendChild(personPhoneNumLabel);
+    personElementDiv.appendChild(personJobTitleLabel);
+
+    personElementDiv.style.border = "thick solid #0000FF";
+    personElementDiv.style.textAlign = "center";
+
+    return personElementDiv;
+
+}
+
 
 async function GetPersonById(id){
     try{
@@ -496,7 +544,7 @@ async function GetPersonById(id){
 }
 
 // Below Function calls are commented out when you do not need to run test. 
- GetAllPerson();
+ GetAllPersons();
  GetPersonById(1008);
 
 //-----------------------------------------------------------------------//
@@ -634,4 +682,5 @@ async function GetVisitsById(id){
 GenerateLoginContainer();
 GenerateNewPersonContainer();
 GenerateNewPetContainer();
+GenerateAllPersonsContainer();
 GenerateAllPetsContainer();
