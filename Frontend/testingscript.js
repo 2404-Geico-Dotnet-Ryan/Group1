@@ -143,7 +143,7 @@ function GenerateHomePageContainer()
 
     GenerateNewPetContainer();
     //GenerateUpdatePetContainer()
-    //GenerateDeletePetContainer()
+    // GenerateDeletePetContainer()
 
     GenerateAllPersonsContainer();
     GenerateAllPetsContainer();
@@ -595,6 +595,19 @@ async function GetPersonById(id) {
         console.error(Error);
     }
 }
+
+//Function to delete person
+async function DeletePersonById(id) {
+    try {
+        let response = await fetch(`${BASE_URL}/Person/${id}`, {method: 'DELETE'});
+        let data = await response.json();
+        console.log(data);  //maybe don't need this
+        deleteData();
+    } catch (Error) {
+        console.error(Error);
+    }
+}
+// DeletePersonById(2);
 
 //-----------------------------------------------------------------------//
 // Testing the Pet Controller Functions                                  //
