@@ -4,10 +4,25 @@ const BASE_URL = "http://localhost:5123";
 
 let current_user = {};
 
-// Container Divs used by the page
-const userContainerDiv = document.querySelector("#user-authorization-container");
-const personContainerDiv = document.querySelector("#add-persons-container");
-const petContainerDiv = document.querySelector("#add-pets-container");
+//-----------------------------------//
+// Container Divs used by the System //
+//-----------------------------------//
+
+// Login Page Containers
+const loginPageContainerDiv = document.querySelector("#login-page-container")
+const loginUserContainerDiv = document.querySelector("#login-user-container");
+
+// Home Page Containers
+const homePageContainerDiv = document.querySelector("#home-page-container");
+
+const addPersonContainerDiv = document.querySelector("#add-persons-container");
+const updatePersonContainerDiv = document.querySelector("#update-persons-container");
+const deletePersonContainerDiv = document.querySelector("#delete-persons-container");
+
+const addPetContainerDiv = document.querySelector("#add-pets-container");
+const updatePetContainerDiv = document.querySelector("#update-pets-container");
+const deletePetContainerDiv = document.querySelector("#delete-pets-container");
+
 const allPetsContainerDiv = document.querySelector("#all-pets-container");
 const allPersonsContainerDiv = document.querySelector("#all-persons-container");
 const allVisitsContainerDiv = document.querySelector("#all-visits-container");
@@ -16,16 +31,16 @@ const allVisitsContainerDiv = document.querySelector("#all-visits-container");
 // Login Container Creation Function //
 //-----------------------------------//
 
+// Call to Generate the Login containers to display 
+GenerateLoginContainer();
+
 // Function to build out the code for the container
 function GenerateLoginContainer() {
-    // Create the main Login container div
-    let loginDiv = document.createElement("div");
-    loginDiv.id = "login-container";
 
     // Create header for Login Seciton 
     let loginHeader = document.createElement("h2");
     loginHeader.type = 'text';
-    loginHeader.textContent = "Testing System User Login"
+    loginHeader.textContent = "Kitty City Vet System User Login"
 
     // Create the UserName input field and label
     let usernameInput = document.createElement('input');
@@ -53,16 +68,13 @@ function GenerateLoginContainer() {
     let loginButton = document.createElement('button');
     loginButton.textContent = "Login";
 
-    // Append the Login container to the user container
-    userContainerDiv.appendChild(loginDiv);
-
     // Append the UserName and UserPassword fields and labels to the Login container
-    loginDiv.appendChild(loginHeader);
-    loginDiv.appendChild(usernameInputLabel);
-    loginDiv.appendChild(usernameInput);
-    loginDiv.appendChild(passwordInputLabel);
-    loginDiv.appendChild(passwordInput);
-    loginDiv.appendChild(loginButton);
+    loginUserContainerDiv.appendChild(loginHeader);
+    loginUserContainerDiv.appendChild(usernameInputLabel);
+    loginUserContainerDiv.appendChild(usernameInput);
+    loginUserContainerDiv.appendChild(passwordInputLabel);
+    loginUserContainerDiv.appendChild(passwordInput);
+    loginUserContainerDiv.appendChild(loginButton);
 
     // Add an event listener to the Login button to handle login
     loginButton.addEventListener("click", GetLoginInformation);
@@ -71,12 +83,12 @@ function GenerateLoginContainer() {
 // Function to tear down the login container
 function TeardownLoginContainer() {
     // Find the login container
-    let loginDiv = document.querySelector("#login-container");
+    let loginUserDiv = document.querySelector("#login-user-container");
 
     // If the login container exists, remove all its children
-    if (loginDiv != null) {
-        while (loginDiv.firstChild) {
-            loginDiv.firstChild.remove();
+    if (loginUserDiv != null) {
+        while (loginUserDiv.firstChild) {
+            loginUserDiv.firstChild.remove();
         }
     }
 }
@@ -91,6 +103,7 @@ function GetLoginInformation() {
 }
 
 // Function to Log into the system user
+// then display the Home page
 async function LoginUser(userName, userPassword) {
     try {
         let response = await fetch(`${BASE_URL}/Login/login`, {
@@ -104,13 +117,37 @@ async function LoginUser(userName, userPassword) {
             })
         });
 
-        let data = await response.json();
-        current_user = data;
+        let userData = await response.json();
+        current_user = userData;
         console.log(current_user);
-        console.log(data);
+        console.log(userData);
+
+        // Tear down the Login in page and
+        // Display the Home page 
+        TeardownLoginContainer();
+        GenerateHomePageContainer();
     } catch (e) {
         console.error("Error logging in:", e); // Added error logging
     }
+}
+
+//----------------------------------------//
+// Function to build Home Page after      // 
+// User is logged into the system         //
+//----------------------------------------//
+function GenerateHomePageContainer()
+{
+    GenerateNewPersonContainer();
+    //GenerateUpdatePersonContainer()
+    //GenerateDeletePersonContainer()
+
+    GenerateNewPetContainer();
+    //GenerateUpdatePetContainer()
+    //GenerateDeletePetContainer()
+
+    GenerateAllPersonsContainer();
+    GenerateAllPetsContainer();
+    GenerateAllVisitsContainer();
 }
 
 //----------------------------------------//
@@ -182,7 +219,7 @@ function GenerateNewPersonContainer() {
     personButton.textContent = "Create New Person";
 
     // Append the Person Div container to the Person container
-    personContainerDiv.appendChild(personDiv);
+    addPersonContainerDiv.appendChild(personDiv);
 
     // Append the username and password fields and labels to the login container
     personDiv.appendChild(personHeader);
@@ -355,7 +392,7 @@ function GenerateNewPetContainer() {
     petButton.textContent = "Create New Pet";
 
     // Append the PetDiv container to the pet container
-    petContainerDiv.appendChild(petDiv);
+    addPetContainerDiv.appendChild(petDiv);
 
     // Append the username and password fields and labels to the login container
     petDiv.appendChild(petHeader);
@@ -478,6 +515,18 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
 // Function to build out the code for the container
 async function GenerateAllPersonsContainer() {
 
+    // Create Div to hold Header Text for table
+    let personAllHeaderDiv = document.createElement("div");
+    personAllHeaderDiv.id = "personAllHeader-container";
+
+    // Create header for All Persons table 
+    let personAllHeader = document.createElement("h2");
+    personAllHeader.type = 'text';
+    personAllHeader.textContent = "All Persons in the system";
+
+    allPersonsContainerDiv.appendChild(personAllHeaderDiv);
+    personAllHeaderDiv.appendChild(personAllHeader);
+    
     let personAllDiv = document.createElement("div");
     personAllDiv.id = "personAll-container";
     allPersonsContainerDiv.appendChild(personAllDiv);
@@ -557,13 +606,25 @@ async function GetPersonById(id) {
 // Function to build out the code for the container
 async function GenerateAllPetsContainer() {
 
+    // Create Div to hold Header Text for table
+    let petAllHeaderDiv = document.createElement("div");
+    petAllHeaderDiv.id = "petAllHeader-container";
+
+    // Create header for All Pets table 
+    let petAllHeader = document.createElement("h2");
+    petAllHeader.type = 'text';
+    petAllHeader.textContent = "All Pets in the system";
+    
+    allPetsContainerDiv.appendChild(petAllHeaderDiv);
+    petAllHeaderDiv.appendChild(petAllHeader);
+
+    // Create Div to hold All Pets table
     let petAllDiv = document.createElement("div");
     petAllDiv.id = "petAll-container";
     allPetsContainerDiv.appendChild(petAllDiv);
 
     // Call to get a list of all Pets in the system
-    // then passed the list into the function that will 
-    // build and load a table with the data
+    // Create the All Pets table
     let pets = await GetAllPets();
     petAllDiv.innerHTML = GeneratePetTable(pets);
 }
@@ -641,10 +702,25 @@ async function GetPetById(id) {
 // Function to build out the code for the container
 async function GenerateAllVisitsContainer() {
 
+    // Create Div to hold Header Text for table
+    let visitAllHeaderDiv = document.createElement("div");
+    visitAllHeaderDiv.id = "visitAllHeader-container";
+
+    // Create header for All Visits table 
+    let visitAllHeader = document.createElement("h2");
+    visitAllHeader.type = 'text';
+    visitAllHeader.textContent = "All Visits in the system";
+
+    allVisitsContainerDiv.appendChild(visitAllHeaderDiv);
+    visitAllHeaderDiv.appendChild(visitAllHeader);
+
+    // Create Div to hold All Visits table
     let visitAllDiv = document.createElement("div");
     visitAllDiv.id = "visitAll-container";
     allVisitsContainerDiv.appendChild(visitAllDiv);
 
+    // Call to get a list of all visits in the system
+    // then create the All Visits table
     let visits = await GetAllVisits();
     visitAllDiv.innerHTML = GenerateVisitTable(visits);
 }
@@ -709,10 +785,3 @@ GetPersonById(1008); // Test getting a Person by ID Number
 GetPetById(1002); // Test getting a Person by ID Number 
 GetVisitsById(1003); // Test getting a Visit by ID Number 
 // End of Testing Only Function calls
-
-GenerateLoginContainer();
-GenerateNewPersonContainer();
-GenerateNewPetContainer();
-GenerateAllPersonsContainer();
-GenerateAllPetsContainer();
-GenerateAllVisitsContainer();
