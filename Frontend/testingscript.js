@@ -474,8 +474,8 @@ async function AddNewPet(personId, petName, petColor, petFurType, petGender, pet
 }
 
 // Function to add new Visit into the system
-// This fuction uses PetID of 1002 for all testing purposes. 
-//If your DB does not have a PetId of 1002 you will need to update to use a id numbeer in our DB
+// This function uses PetID of  for all testing purposes. 
+//If your DB does not have a PetId of 3 you will need to update to use a id numbeer in our DB
 // In the real code we will need to look up the newly added Pets ID number before adding an inital Vist to the table
 async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
     try {
@@ -486,7 +486,7 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
             },
             body: JSON.stringify(
                 {
-                    "petId": 1002,
+                    "petId": 3,
                     "personId": personId,
                     "weight": petWeight,
                     "age": petAge,
@@ -693,7 +693,7 @@ function GeneratePetTable(pets) {
     return petTable;
 }
 
-// Function to get a single Pet by thier PetID
+// Function to get a single Pet by their PetID
 async function GetPetById(id) {
     try {
         let response = await fetch(`${BASE_URL}/Pets/${id}`);
@@ -704,6 +704,19 @@ async function GetPetById(id) {
         console.error(Error);
     }
 }
+
+//Function to delete pet
+async function DeletePetById(id) {
+    try {
+        let response = await fetch(`${BASE_URL}/Pets/${id}`, {method: 'DELETE'});
+        let data = await response.json();
+        console.log(data);  //maybe don't need this
+        deleteData();
+    } catch (Error) {
+        console.error(Error);
+    }
+}
+// DeletePetById(3);
 
 //-----------------------------------------------------------------------//
 // Testing the Visit Controller Functions                                //
@@ -781,7 +794,7 @@ function GenerateVisitTable(visits) {
     return visitTable;
 }
 
-// Function to get a single Visit by thier VisitID
+// Function to get a single Visit by their VisitID
 async function GetVisitsById(id) {
     try {
         let response = await fetch(`${BASE_URL}/Visits/${id}`);
@@ -794,7 +807,7 @@ async function GetVisitsById(id) {
 }
 
 // Below Testing Only Function calls are commented out when you do not need to run test. 
-GetPersonById(1008); // Test getting a Person by ID Number 
-GetPetById(1002); // Test getting a Person by ID Number 
-GetVisitsById(1003); // Test getting a Visit by ID Number 
+GetPersonById(1); // Test getting a Person by ID Number 
+GetPetById(2); // Test getting a Person by ID Number 
+GetVisitsById(1); // Test getting a Visit by ID Number 
 // End of Testing Only Function calls
