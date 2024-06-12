@@ -16,7 +16,7 @@ Controllers - need to write out code for each controller
  - add controller for log in model - LoginController.cs
 	- Person - Cora/Lanette
 	- Pet - Brandon/Lanette
-	- Visit - Shristi/Lanette
+	- Visit - Srishti/Lanette
 	- Login - David/Lanette
 
 
@@ -25,7 +25,7 @@ Services - need to create service files and work through code.
   - match the controllers ( Person, Pet, Visit, Login)
 	- Person - Cora/Lanette
 	- Pet - Brandon/Lanette
-	- Visit - Shristi/Lanette
+	- Visit - Srishti/Lanette
 	- Login - David/Lanette
 
 .csproj - a pain to merge changes in this file.
