@@ -4,14 +4,19 @@ const BASE_URL = "http://localhost:5123";
 
 let current_user = {};
 
-// User Container Div
+// Container Divs used by the page
 const userContainerDiv = document.querySelector("#user-authorization-container");
+const personContainerDiv = document.querySelector("#add-persons-container");
+const petContainerDiv = document.querySelector("#add-pets-container");
 const allPetsContainerDiv = document.querySelector("#all-pets-container");
 const allPersonsContainerDiv = document.querySelector("#all-persons-container");
+const allVisitsContainerDiv = document.querySelector("#all-visits-container");
 
 //-----------------------------------//
 // Login Container Creation Function //
 //-----------------------------------//
+
+// Function to build out the code for the container
 function GenerateLoginContainer() {
     // Create the main Login container div
     let loginDiv = document.createElement("div");
@@ -26,7 +31,7 @@ function GenerateLoginContainer() {
     let usernameInput = document.createElement('input');
     usernameInput.type = 'text';
     usernameInput.placeholder = "Enter UserName"; //add default text in field
-    usernameInput.setAttribute("required","required")//makes field required 
+    usernameInput.setAttribute("required", "required")//makes field required 
     usernameInput.id = 'username-input';
     usernameInput.style.display = 'block';
 
@@ -37,7 +42,7 @@ function GenerateLoginContainer() {
     let passwordInput = document.createElement('input');
     passwordInput.type = 'password';
     passwordInput.placeholder = "Enter Password"; //add default text in field
-    passwordInput.setAttribute("required","required")//makes field required 
+    passwordInput.setAttribute("required", "required")//makes field required 
     passwordInput.id = 'password-input';
     passwordInput.style.display = 'block';
 
@@ -48,7 +53,7 @@ function GenerateLoginContainer() {
     let loginButton = document.createElement('button');
     loginButton.textContent = "Login";
 
-    // Append the Login container to the main container
+    // Append the Login container to the user container
     userContainerDiv.appendChild(loginDiv);
 
     // Append the UserName and UserPassword fields and labels to the Login container
@@ -94,7 +99,7 @@ async function LoginUser(userName, userPassword) {
                 'Content-Type': "application/json" // Corrected the content type to 'application/json'
             },
             body: JSON.stringify({
-                "userName": userName, 
+                "userName": userName,
                 "userPassword": userPassword
             })
         });
@@ -111,6 +116,8 @@ async function LoginUser(userName, userPassword) {
 //----------------------------------------//
 // New Person Container Creation Function //
 //----------------------------------------//
+
+// Function to build out the code for the container
 function GenerateNewPersonContainer() {
     // Create the new Person container div
     let personDiv = document.createElement("div");
@@ -125,7 +132,7 @@ function GenerateNewPersonContainer() {
     let personTypeHeader = document.createElement("h3");
     personTypeHeader.type = 'text';
     personTypeHeader.textContent = "Person Type Options - Key 1 for Employee  Key 2 for Pet Parent "
-    
+
     let personTypeInput = document.createElement('input');
     personTypeInput.type = 'text';
     personTypeInput.id = 'personType-input';
@@ -174,8 +181,8 @@ function GenerateNewPersonContainer() {
     let personButton = document.createElement('button');
     personButton.textContent = "Create New Person";
 
-    // Append the Person container to the main user container
-    userContainerDiv.appendChild(personDiv);
+    // Append the Person Div container to the Person container
+    personContainerDiv.appendChild(personDiv);
 
     // Append the username and password fields and labels to the login container
     personDiv.appendChild(personHeader);
@@ -203,7 +210,7 @@ function GetPersonInformation() {
     let lastName = document.querySelector("#lastName-input").value;
     let phoneNumber = document.querySelector("#phoneNumber-input").value;
     let jobTitle = document.querySelector("#jobTitle-input").value;
-   
+
     // Call the function to add a new person to the system
     AddNewPerson(personType, firstName, lastName, phoneNumber, jobTitle);
 }
@@ -236,7 +243,6 @@ async function AddNewPerson(personType, firstName, lastName, phoneNumber, jobTit
     }
 }
 
-
 //----------------------------------------//
 // New Pet Container Creation Function    //
 // This will test adding a new PET        // 
@@ -246,6 +252,8 @@ async function AddNewPerson(personType, firstName, lastName, phoneNumber, jobTit
 // record to the DB                       // 
 // This test mimicks how the system works //
 //----------------------------------------//
+
+// Function to build out the code for the container
 function GenerateNewPetContainer() {
     // Create the main sign up container div
     let petDiv = document.createElement("div");
@@ -260,7 +268,7 @@ function GenerateNewPetContainer() {
     let personIdHeader = document.createElement("h3");
     personIdHeader.type = 'text';
     personIdHeader.textContent = "You need to find a valid PersonId from your local DB to use here"
-    
+
     let personIdInput = document.createElement('input');
     personIdInput.type = 'text';
     personIdInput.id = 'personId-input';
@@ -346,18 +354,16 @@ function GenerateNewPetContainer() {
     let petButton = document.createElement('button');
     petButton.textContent = "Create New Pet";
 
-    // Append the Person container to the main user container
-    userContainerDiv.appendChild(petDiv);
+    // Append the PetDiv container to the pet container
+    petContainerDiv.appendChild(petDiv);
 
     // Append the username and password fields and labels to the login container
     petDiv.appendChild(petHeader);
     petDiv.appendChild(personIdHeader);
     petDiv.appendChild(personIdInputLabel);
     petDiv.appendChild(personIdInput);
-
     petDiv.appendChild(petNameInputLabel);
     petDiv.appendChild(petNameInput);
-
     petDiv.appendChild(petColorInputLabel);
     petDiv.appendChild(petColorInput);
     petDiv.appendChild(petFurTypeInputLabel);
@@ -389,10 +395,10 @@ function GetPetInformation() {
     let petAge = document.querySelector("#petAge-input").value;
     let petInside = document.querySelector("#petInside-input").checked;
     let seenBy = document.querySelector("#seenBy-input").value;
-   
+
     // Call the function to add a new Pet to the system
     AddNewPet(personId, petName, petColor, petFurType, petGender, petWeight, petAge, petInside, seenBy);
-    
+
     // Call the function to add a new visit to the system
     AddNewVisit(personId, petWeight, petAge, petInside, seenBy);
 }
@@ -400,7 +406,7 @@ function GetPetInformation() {
 // Function to add new Pet into the system
 async function AddNewPet(personId, petName, petColor, petFurType, petGender, petWeight, petAge, petInside, seenBy) {
     try {
-            let response = await fetch(`${BASE_URL}/Pets`, {
+        let response = await fetch(`${BASE_URL}/Pets`, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json" // Corrected the content type to 'application/json'
@@ -430,13 +436,13 @@ async function AddNewPet(personId, petName, petColor, petFurType, petGender, pet
     }
 }
 
-
 // Function to add new Visit into the system
-// This fuction uses PetID of 1001 for all testing purposes
+// This fuction uses PetID of 1002 for all testing purposes. 
+//If your DB does not have a PetId of 1002 you will need to update to use a id numbeer in our DB
 // In the real code we will need to look up the newly added Pets ID number before adding an inital Vist to the table
 async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
     try {
-            let response = await fetch(`${BASE_URL}/Visits`, {
+        let response = await fetch(`${BASE_URL}/Visits`, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json" // Corrected the content type to 'application/json'
@@ -462,11 +468,6 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
     }
 }
 
-
-//-----------------------------------------------------------------------//
-// Generate and tear down page components                                //
-//-----------------------------------------------------------------------//
-
 //-----------------------------------------------------------------------//
 // Testing the Person Controller Functions                               //
 //-----------------------------------------------------------------------//
@@ -474,78 +475,77 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
 // in the API and Script before you actually use them in your website    //
 //-----------------------------------------------------------------------//
 
-async function GenerateAllPersonsContainer(){
+// Function to build out the code for the container
+async function GenerateAllPersonsContainer() {
 
+    let personAllDiv = document.createElement("div");
+    personAllDiv.id = "personAll-container";
+    allPersonsContainerDiv.appendChild(personAllDiv);
+
+    // Call to get a list of all Persons in the system
+    // then passed the list into the function that will 
+    // build and load a table with the data
     let persons = await GetAllPersons();
-    for (const person of persons) {
-        let elementCreated = GeneratePersonElement(person);
-        allPersonsContainerDiv.appendChild(elementCreated);
-    }
+    personAllDiv.innerHTML = GeneratePersonTable(persons);
 }
 
-async function GetAllPersons(){
-    try{
+// Function to get a list of a Persons in the system
+async function GetAllPersons() {
+    try {
         let response = await fetch(`${BASE_URL}/Person`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
 
-function GeneratePersonElement(person)
-{
-    let personElementDiv = document.createElement("div");
-    personElementDiv.id = `person-${person.personId}`;
+// Function to build a table and then load it with the passed in data 
+function GeneratePersonTable(persons) {
 
-    let personIdLabel = document.createElement("h5");
-    personIdLabel.textContent = person.personId;
+    // This line declairs a new table node/section in your HTML
+    let personTable = '<table>';
 
-    let personTypeLabel = document.createElement("h5");
-    personTypeLabel.textContent = person.personType;
+    // This section builds the Column Header Names
+    personTable += `<tr>
+        <th>Person Id</th>
+        <th>Person Type</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Job Title</th>
+    </tr>`;
 
-    let personFirstNameLabel = document.createElement("h5");
-    personFirstNameLabel.textContent = person.firstName;
+    // This section adds the passed in data into the table
+    persons.forEach(p => {
+        personTable += `<tr>
+        <td>${p.personId}</td>
+        <td>${p.personType}</td>
+        <td>${p.firstName}</td>
+        <td>${p.lastName}</td>
+        <td>${p.phoneNum}</td>
+        <td>${p.jobTitle}</td>
+        </tr>`;
+    });
 
-    let personLastNameLabel = document.createElement("h5");
-    personLastNameLabel.textContent = person.lastName;
+    // This line closes out the table nod/section in your HTML
+    personTable += '</table>';
 
-    let personPhoneNumLabel = document.createElement("h5");
-    personPhoneNumLabel.textContent = person.phoneNum;
-
-    let personJobTitleLabel = document.createElement("h5");
-    personJobTitleLabel.textContent = person.jobTitle;
-
-    personElementDiv.appendChild(personIdLabel);
-    personElementDiv.appendChild(personTypeLabel);
-    personElementDiv.appendChild(personFirstNameLabel);
-    personElementDiv.appendChild(personLastNameLabel);
-    personElementDiv.appendChild(personPhoneNumLabel);
-    personElementDiv.appendChild(personJobTitleLabel);
-
-    personElementDiv.style.border = "thick solid #0000FF";
-    personElementDiv.style.textAlign = "center";
-
-    return personElementDiv;
-
+    return personTable;
 }
 
-
-async function GetPersonById(id){
-    try{
+// Function to get a single Person by thier PersonID
+async function GetPersonById(id) {
+    try {
         let response = await fetch(`${BASE_URL}/Person/${id}`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
-
-// Below Function calls are commented out when you do not need to run test. 
- GetAllPersons();
- GetPersonById(1008);
 
 //-----------------------------------------------------------------------//
 // Testing the Pet Controller Functions                                  //
@@ -554,97 +554,82 @@ async function GetPersonById(id){
 // in the API and Script before you actually use them in your website    //
 //-----------------------------------------------------------------------//
 
-async function GenerateAllPetsContainer(){
+// Function to build out the code for the container
+async function GenerateAllPetsContainer() {
 
+    let petAllDiv = document.createElement("div");
+    petAllDiv.id = "petAll-container";
+    allPetsContainerDiv.appendChild(petAllDiv);
+
+    // Call to get a list of all Pets in the system
+    // then passed the list into the function that will 
+    // build and load a table with the data
     let pets = await GetAllPets();
-    for (const pet of pets) {
-        let elementCreated = GeneratePetElement(pet);
-        allPetsContainerDiv.appendChild(elementCreated);
-    }
+    petAllDiv.innerHTML = GeneratePetTable(pets);
 }
 
-async function GetAllPets(){
-    try{
+// Function to get a list of a Pets in the system
+async function GetAllPets() {
+    try {
         let response = await fetch(`${BASE_URL}/Pets`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
 
-function GeneratePetElement(pet)
-{
-    let petElementDiv = document.createElement("div");
-    petElementDiv.id = `pet-${pet.petId}`;
+// Function to build a table and then load it with the passed in data 
+function GeneratePetTable(pets) {
+    let petTable = '<table>';
+    petTable += `<tr>
+        <th>Pet Id</th>
+        <th>Person Id</th>
+        <th>Pet Name</th>
+        <th>Pet Color</th>
+        <th>Pet Fur Type</th>
+        <th>Pet Gender</th>
+        <th>Pet Weight</th>
+        <th>Pet Age</th>
+        <th>Pet InSidePet</th>
+        <th>Pet AppointmentDate</th>
+        <th>Pet SeenBy</th>
+        <th>Pet RainbowBridgeDate</th>
+    </tr>`;
 
-    let petIdLabel = document.createElement("h5");
-    petIdLabel.textContent = pet.petId;
+    pets.forEach(p => {
+        petTable += `<tr>
+        <td>${p.petId}</td>
+        <td>${p.personId}</td>
+        <td>${p.petName}</td>
+        <td>${p.color}</td>
+        <td>${p.furType}</td>
+        <td>${p.gender}</td>
+        <td>${p.weight}</td>
+        <td>${p.age}</td>
+        <td>${p.inSidePet}</td>
+        <td>${p.appointmentDate}</td>
+        <td>${p.seenBy}</td>
+        <td>${p.rainbowBridgeDate}</td>
+        </tr>`;
+    });
+    petTable += '</table>';
 
-    let petNameLabel = document.createElement("h5");
-    petNameLabel.textContent = pet.petName;
-
-    let petColorLabel = document.createElement("h5");
-    petColorLabel.textContent = pet.color;
-
-    let petFurTypeLabel = document.createElement("h5");
-    petFurTypeLabel.textContent = pet.furType;
-
-    let petGenderLabel = document.createElement("h5");
-    petGenderLabel.textContent = pet.gender;
-
-    let petWeightLabel = document.createElement("h5");
-    petWeightLabel.textContent = pet.weight;
-
-    let petAgeLabel = document.createElement("h5");
-    petAgeLabel.textContent = pet.age;
-
-    let petInsideLabel = document.createElement("h5");
-    petInsideLabel.textContent = pet.inSidePet;
-
-    let petAppointmentLabel = document.createElement("h5");
-    petAppointmentLabel.textContent = pet.appointmentDate;
-
-    let petSeenByLabel = document.createElement("h5");
-    petSeenByLabel.textContent = pet.seenBy;
-
-    let petRainbowLabel = document.createElement("h5");
-    petRainbowLabel.textContent = pet.rainbowBridgeDate;
-
-    petElementDiv.appendChild(petIdLabel);
-    petElementDiv.appendChild(petNameLabel);
-    petElementDiv.appendChild(petColorLabel);
-    petElementDiv.appendChild(petGenderLabel);
-    petElementDiv.appendChild(petWeightLabel);
-    petElementDiv.appendChild(petAgeLabel);
-    petElementDiv.appendChild(petInsideLabel);
-    petElementDiv.appendChild(petAppointmentLabel);
-    petElementDiv.appendChild(petSeenByLabel);
-    petElementDiv.appendChild(petRainbowLabel);
-
-    petElementDiv.style.border = "thick solid #0000FF";
-    petElementDiv.style.textAlign = "center";
-
-    return petElementDiv;
-
+    return petTable;
 }
 
-
-async function GetPetById(id){
-    try{
+// Function to get a single Pet by thier PetID
+async function GetPetById(id) {
+    try {
         let response = await fetch(`${BASE_URL}/Pets/${id}`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
-
-// Below Function calls are commented out when you do not need to run test. 
- //GetAllPet();
- GetPetById(1002);
 
 //-----------------------------------------------------------------------//
 // Testing the Visit Controller Functions                                //
@@ -653,34 +638,81 @@ async function GetPetById(id){
 // in the API and Script before you actually use them in your website    //
 //-----------------------------------------------------------------------//
 
-async function GetAllVisits(){
-    try{
+// Function to build out the code for the container
+async function GenerateAllVisitsContainer() {
+
+    let visitAllDiv = document.createElement("div");
+    visitAllDiv.id = "visitAll-container";
+    allVisitsContainerDiv.appendChild(visitAllDiv);
+
+    let visits = await GetAllVisits();
+    visitAllDiv.innerHTML = GenerateVisitTable(visits);
+}
+
+// Function to get a list of a Visits in the system
+async function GetAllVisits() {
+    try {
         let response = await fetch(`${BASE_URL}/Visits`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
 
-async function GetVisitsById(id){
-    try{
+// Function to build a table and then load it with the passed in data
+function GenerateVisitTable(visits) {
+    let visitTable = '<table>';
+    visitTable += `<tr>
+        <th>Visit Id</th>
+        <th>Pet Id</th>
+        <th>Person Id</th>
+        <th>Pet Weight</th>
+        <th>Pet Age</th>
+        <th>Pet InSidePet</th>
+        <th>Pet AppointmentDate</th>
+        <th>Pet SeenBy</th>
+    </tr>`;
+
+    visits.forEach(v => {
+        visitTable += `<tr>
+        <td>${v.visitId}</td>
+        <td>${v.petId}</td>
+        <td>${v.personId}</td>
+        <td>${v.weight}</td>
+        <td>${v.age}</td>
+        <td>${v.inSidePet}</td>
+        <td>${v.appointmentDate}</td>
+        <td>${v.seenBy}</td>
+        </tr>`;
+    });
+    visitTable += '</table>';
+
+    return visitTable;
+}
+
+// Function to get a single Visit by thier VisitID
+async function GetVisitsById(id) {
+    try {
         let response = await fetch(`${BASE_URL}/Visits/${id}`);
         let data = await response.json();
         console.log(data);
         return data;
-    }catch(Error){
+    } catch (Error) {
         console.error(Error);
     }
 }
 
-// Below Function calls are commented out when you do not need to run test. 
- GetAllVisits();
- GetVisitsById(1003);
+// Below Testing Only Function calls are commented out when you do not need to run test. 
+GetPersonById(1008); // Test getting a Person by ID Number 
+GetPetById(1002); // Test getting a Person by ID Number 
+GetVisitsById(1003); // Test getting a Visit by ID Number 
+// End of Testing Only Function calls
 
 GenerateLoginContainer();
 GenerateNewPersonContainer();
 GenerateNewPetContainer();
 GenerateAllPersonsContainer();
 GenerateAllPetsContainer();
+GenerateAllVisitsContainer();
