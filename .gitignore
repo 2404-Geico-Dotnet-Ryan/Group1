@@ -7,7 +7,7 @@
 # Project2 changes
 # appsettings.json
 Migrations/
-
+.vscode/
 
 # User-specific files
 *.rsuser
