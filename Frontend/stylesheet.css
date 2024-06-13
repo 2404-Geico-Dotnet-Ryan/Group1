@@ -1,0 +1,56 @@
+body {
+    background: #eed5d7;
+    background: -moz-linear-gradient(left, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
+    background: -webkit-linear-gradient(left, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
+    background: linear-gradient(to right, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
+    color: #5a0718;
+}
+/* Classes we use periods before the class name */
+/* .intro {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+} */
+
+/* Ids we use the # before the id name */
+#Title {
+    font-size: 100px;
+    color: #5a0718;
+    text-align: center;
+}
+
+/* a {
+    font-size: 18px;
+    color: orange
+} */
+
+/* a:hover {
+    font-size: 25px;
+}
+
+a:visited {
+    color: darkorange;
+} */
+
+/*  Box Model 
+    Refers to 4 parts of every element
+    Margin
+        - This is the outermost part of the box model. It references how elements nest next to each other
+    Border
+        - This is the boundary between the padding and the margin. This is used to introduce some kind of visual boundary
+    Padding
+        - This is the space between the content and the border
+    Content
+        - This is the content of the element itself
+
+    Most of the time, it is not a good idea to use fixed widths or sizes. This is because most devices do not have the same resolution or thesame width.
+*/
+
+/* #Title {
+    border-color: aqua;
+    border-style: inset;
+    border-width: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+} */
