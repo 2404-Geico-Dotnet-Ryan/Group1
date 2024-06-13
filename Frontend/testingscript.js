@@ -142,7 +142,7 @@ function GenerateHomePageContainer()
     //GenerateDeletePersonContainer()
 
     GenerateNewPetContainer();
-    //GenerateUpdatePetContainer()
+    GenerateUpdatePetContainer()
     // GenerateDeletePetContainer()
 
     GenerateAllPersonsContainer();
@@ -163,6 +163,7 @@ function GenerateNewPersonContainer() {
     // Create header for New Pet Parent Section 
     let personHeader = document.createElement("h2");
     personHeader.type = 'text';
+    personHeader.setAttribute("style", "background-color: #ccc;");
     personHeader.textContent = "Testing Adding a new Person to System"
 
     // Select Type of Person 
@@ -299,7 +300,8 @@ function GenerateNewPetContainer() {
     // Create header for New Pet Section 
     let petHeader = document.createElement("h2");
     petHeader.type = 'text';
-    petHeader.textContent = "Tesing Adding a new Pet and thier first Visit to System"
+    petHeader.setAttribute("style", "background-color: #ccc;");
+    petHeader.textContent = "Testing Adding a new Pet and thier first Visit to System"
 
     // Set PersonID for testing purposes 
     let personIdHeader = document.createElement("h3");
@@ -505,6 +507,237 @@ async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
     }
 }
 
+//---------------------------------------------------------------//
+//                 Update Pet Container Function                 //
+//        This will update a pet based on their pet id           // 
+//---------------------------------------------------------------//
+
+// Function to build out the code for the container
+function GenerateUpdatePetContainer() {
+
+    // Create the main sign up container div
+    let updatePetDiv = document.createElement("div");
+    updatePetDiv.id = "update-pets-container";
+
+    // Create header for Update Pet Section 
+    let updatePetHeader = document.createElement("h2");
+    updatePetHeader.type = 'text';
+    updatePetHeader.setAttribute("style", "background-color: #ccc;");
+    updatePetHeader.textContent = "Testing Updating a Pet based on their ID"
+
+//------Input Fields-----//
+    // Create the Pet ID input field and label
+    let petIdInput = document.createElement('input');
+    petIdInput.type = 'number';
+    petIdInput.id = 'update-petId-input';
+    petIdInput.style.display = 'block';
+
+    let petIdInputLabel = document.createElement('label');
+    petIdInputLabel.textContent = "Pet ID";
+
+    // Create the Person ID input field and label
+    let personIdInput = document.createElement('input');
+    personIdInput.type = 'text';
+    personIdInput.id = 'update-personId-input';
+    personIdInput.style.display = 'block';
+
+    let personIdInputLabel = document.createElement('label');
+    personIdInputLabel.textContent = "Person ID";
+
+    // Create the Pet Name input field and label
+    let petNameInput = document.createElement('input');
+    petNameInput.type = 'text';
+    petNameInput.id = 'update-petName-input';
+    petNameInput.style.display = 'block';
+
+    let petNameInputLabel = document.createElement('label');
+    petNameInputLabel.textContent = "Pet Name";
+
+    // Create the Pet Color input field and label
+    let petColorInput = document.createElement('input');
+    petColorInput.type = 'text';
+    petColorInput.id = 'update-petColor-input';
+    petColorInput.style.display = 'block';
+
+    let petColorInputLabel = document.createElement('label');
+    petColorInputLabel.textContent = "Pet Color";
+
+    // Create the Pet Fur Type input field and label
+    let petFurTypeInput = document.createElement('input');
+    petFurTypeInput.type = 'text';
+    petFurTypeInput.id = 'update-petFurType-input';
+    petFurTypeInput.style.display = 'block';
+
+    let petFurTypeInputLabel = document.createElement('label');
+    petFurTypeInputLabel.textContent = "Fur Type";
+
+    // Create the Gender input field and label
+    let petGenderInput = document.createElement('input');
+    petGenderInput.type = 'text';
+    petGenderInput.id = 'update-petGender-input';
+    petGenderInput.style.display = 'block';
+
+    let petGenderInputLabel = document.createElement('label');
+    petGenderInputLabel.textContent = "Pet Gender";
+
+    // Create the Weight input field and label
+    let petWeightInput = document.createElement('input');
+    petWeightInput.type = 'text';
+    petWeightInput.id = 'update-petWeight-input';
+    petWeightInput.style.display = 'block';
+
+    let petWeightInputLabel = document.createElement('label');
+    petWeightInputLabel.textContent = "Pet Weight";
+
+    // Create the Age input field and label
+    let petAgeInput = document.createElement('input');
+    petAgeInput.type = 'text';
+    petAgeInput.id = 'update-petAge-input';
+    petAgeInput.style.display = 'block';
+
+    let petAgeInputLabel = document.createElement('label');
+    petAgeInputLabel.textContent = "Pet Age";
+
+    // Create the InSidePet input field and label   
+    let petInsideInput = document.createElement('input');
+    petInsideInput.type = 'checkbox';
+    petInsideInput.id = 'update-petInside-input';
+    //petInsideInput.style = 'text-transform:lowercase';
+    petInsideInput.style.display = 'block';
+
+    let petInsideInputLabel = document.createElement('label');
+    petInsideInputLabel.textContent = "InSidePet - True or False";
+
+    // Create the Appointment Date input field and label   
+    let appointmentDateInput = document.createElement('input');
+    appointmentDateInput.type = 'text';
+    appointmentDateInput.id = 'update-appointmentDate-input';
+    appointmentDateInput.style.display = 'block';
+
+    let appointmentDateInputLabel = document.createElement('label');
+    appointmentDateInputLabel.textContent = "Appointment Date";
+    
+    // Create the SeenBy input field and label   
+    let seenByInput = document.createElement('input');
+    seenByInput.type = 'text';
+    seenByInput.id = 'update-seenBy-input';
+    seenByInput.style.display = 'block';
+
+    let seenByInputLabel = document.createElement('label');
+    seenByInputLabel.textContent = "Seen By";
+
+    // Create the Rainbow Bridge Date input field and label   
+    let rainbowBridgeDateInput = document.createElement('input');
+    rainbowBridgeDateInput.type = 'text';
+    rainbowBridgeDateInput.id = 'update-rainbowBridgeDate-input';
+    rainbowBridgeDateInput.style.display = 'block';
+
+    let rainbowBridgeDateInputLabel = document.createElement('label');
+    rainbowBridgeDateInputLabel.textContent = "Rainbow Bridge Date";
+//------End Input Fields-----//
+
+    // Create the Update Pet button
+    let updatePetButton = document.createElement('button');
+    updatePetButton.textContent = "Update Pet";
+
+    // Append the updatePetDiv container to the update pet container
+    updatePetContainerDiv.appendChild(updatePetDiv);
+
+    // Append the pet fields and labels to the update pet container
+    updatePetDiv.appendChild(updatePetHeader);
+    updatePetDiv.appendChild(petIdInputLabel);
+    updatePetDiv.appendChild(petIdInput);
+    updatePetDiv.appendChild(personIdInputLabel);
+    updatePetDiv.appendChild(personIdInput);
+    updatePetDiv.appendChild(petNameInputLabel);
+    updatePetDiv.appendChild(petNameInput);
+    updatePetDiv.appendChild(petColorInputLabel);
+    updatePetDiv.appendChild(petColorInput);
+    updatePetDiv.appendChild(petFurTypeInputLabel);
+    updatePetDiv.appendChild(petFurTypeInput);
+    updatePetDiv.appendChild(petGenderInputLabel);
+    updatePetDiv.appendChild(petGenderInput);
+    updatePetDiv.appendChild(petWeightInputLabel);
+    updatePetDiv.appendChild(petWeightInput);
+    updatePetDiv.appendChild(petAgeInputLabel);
+    updatePetDiv.appendChild(petAgeInput);
+    updatePetDiv.appendChild(petInsideInputLabel);
+    updatePetDiv.appendChild(petInsideInput);
+    updatePetDiv.appendChild(appointmentDateInputLabel);
+    updatePetDiv.appendChild(appointmentDateInput);
+    updatePetDiv.appendChild(seenByInputLabel);
+    updatePetDiv.appendChild(seenByInput);
+    updatePetDiv.appendChild(rainbowBridgeDateInputLabel);
+    updatePetDiv.appendChild(rainbowBridgeDateInput);
+    updatePetDiv.appendChild(updatePetButton);
+
+    // Add an event listener to the update pet button
+    updatePetButton.addEventListener("click", GetPetInformation);
+
+    // Function to get Pet information from input fields
+    function GetPetInformation() {
+    let id = document.querySelector("#update-petId-input").value;
+    let personId = document.querySelector("#update-personId-input").value;
+    let petName = document.querySelector("#update-petName-input").value;
+    let color = document.querySelector("#update-petColor-input").value;
+    let furType = document.querySelector("#update-petFurType-input").value;
+    let gender = document.querySelector("#update-petGender-input").value;
+    let petWeight = document.querySelector("#update-petWeight-input").value;
+    let petAge = document.querySelector("#update-petAge-input").value;
+    let petInside = document.querySelector("#update-petInside-input").checked;
+    let appointmentDate = document.querySelector("#update-appointmentDate-input").value;
+    let seenBy = document.querySelector("#update-seenBy-input").value;
+    let rainbowBridgeDate = document.querySelector("#update-rainbowBridgeDate-input").value;
+
+    // Call the function to update a Pet in the system
+    UpdatePet(id, personId, petName, color, furType, gender, petWeight, petAge, petInside, appointmentDate, seenBy, rainbowBridgeDate);
+
+    // Function to update a pet in the system by their ID
+    async function UpdatePet(id, personId, petName, color, furType, gender, petWeight, petAge, petInside, appointmentDate, seenBy, rainbowBridgeDate) 
+    {
+        try 
+        {
+            let response = await fetch(`${BASE_URL}/Pets/${id}`, 
+            {
+                method: "PUT",
+                headers: {
+                    'Content-Type': "application/json" // Corrected the content type to 'application/json'
+                            },
+                body: JSON.stringify
+                (
+                    {
+                        "petId": id,
+                        "personId": personId,
+                        "petName": petName,
+                        "color": color,
+                        "furType": furType,
+                        "gender": gender,
+                        "weight": petWeight,
+                        "age": petAge,
+                        "inSidePet": petInside,
+                        "appointmentDate": appointmentDate,
+                        "seenBy": seenBy,
+                        "rainbowBridgeDate": rainbowBridgeDate
+                    }
+                )       
+            });
+
+            let data = await response.json();
+            let updatedPet = data;
+            //console.log(updatedPet);
+            console.log(data);
+            //updateData(updatedPet);
+        } 
+        catch (e) 
+        {
+            console.error("Error Updating Pet:", e); // Added error logging
+        }
+    }
+
+}
+}
+ //---------------END Update Pet Container Function----------------------//
+
 //-----------------------------------------------------------------------//
 // Testing the Person Controller Functions                               //
 //-----------------------------------------------------------------------//
@@ -522,6 +755,7 @@ async function GenerateAllPersonsContainer() {
     // Create header for All Persons table 
     let personAllHeader = document.createElement("h2");
     personAllHeader.type = 'text';
+    personAllHeader.setAttribute("style", "background-color: #ccc;");
     personAllHeader.textContent = "All Persons in the system";
 
     allPersonsContainerDiv.appendChild(personAllHeaderDiv);
@@ -626,6 +860,7 @@ async function GenerateAllPetsContainer() {
     // Create header for All Pets table 
     let petAllHeader = document.createElement("h2");
     petAllHeader.type = 'text';
+    petAllHeader.setAttribute("style", "background-color: #ccc;");
     petAllHeader.textContent = "All Pets in the system";
     
     allPetsContainerDiv.appendChild(petAllHeaderDiv);
@@ -735,6 +970,7 @@ async function GenerateAllVisitsContainer() {
     // Create header for All Visits table 
     let visitAllHeader = document.createElement("h2");
     visitAllHeader.type = 'text';
+    visitAllHeader.setAttribute("style", "background-color: #ccc;");
     visitAllHeader.textContent = "All Visits in the system";
 
     allVisitsContainerDiv.appendChild(visitAllHeaderDiv);
