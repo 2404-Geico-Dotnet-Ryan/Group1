@@ -29,6 +29,7 @@ const updatePetContainerDiv = document.querySelector("#update-pets-container");
 const deletePetContainerDiv = document.querySelector("#delete-pets-container");
 const allPetsContainerDiv = document.querySelector("#all-pets-container");
 
+const addVisitContainerDiv = document.querySelector("#add-visits-container");
 const getVisitContainerDiv = document.querySelector("#get-visits-container");
 const getVisitDisplayContainerDiv = document.querySelector("#get-visit-display-container");
 const allVisitsContainerDiv = document.querySelector("#all-visits-container");
@@ -166,6 +167,7 @@ function GenerateHomePageContainer() {
     GenerateDeletePetContainer();
     GenerateAllPetsContainer();
 
+    GenerateNewVisitContainer();
     GenerateGetVisitContainer();
     GenerateAllVisitsContainer();
 }
@@ -262,7 +264,7 @@ function GenerateNewPersonContainer() {
 }
 
 // Function to get Person information from input fields
-function GetNewPersonInformation() {
+async function GetNewPersonInformation() {
     let personType = document.querySelector("#personType-input").value;
     let firstName = document.querySelector("#firstName-input").value;
     let lastName = document.querySelector("#lastName-input").value;
@@ -270,7 +272,8 @@ function GetNewPersonInformation() {
     let jobTitle = document.querySelector("#jobTitle-input").value;
 
     // Call the function to add a new person to the system
-    AddNewPerson(personType, firstName, lastName, phoneNumber, jobTitle);
+    await AddNewPerson(personType, firstName, lastName, phoneNumber, jobTitle);
+    GenerateAllPersonsContainer();
 }
 
 // Function to add new Person into the system
@@ -353,7 +356,9 @@ async function GetPersonById(id) {
         let data = await response.json();
         console.log(data);
         return data;
-    } catch (Error) {
+    } 
+    catch (Error) {
+        alert("Person ID was not located please try again."); 
         console.error(Error);
     }
 }
@@ -408,11 +413,11 @@ function TeardownPersonDisplayTableContainer() {
 
 // Function to build out the code for the container
 function GenerateUpdatePersonContainer() {
-    // Create the new Person container div
+    // Create the Update Person container div
     let personDiv = document.createElement("div");
     personDiv.id = "update-persons-container";
 
-    // Create header for New Pet Parent Section 
+    // Create header for Update Person Section 
     let personHeader = document.createElement("h2");
     personHeader.type = 'text';
     personHeader.setAttribute("style", "background-color: #eed5d7;");
@@ -505,7 +510,7 @@ function GenerateUpdatePersonContainer() {
 }
 
 // Function to get Person information from input fields
-function GetUpdatePersonInformation() {
+async function GetUpdatePersonInformation() {
     let personId = document.querySelector("#update-personId-input").value;
     let personType = document.querySelector("#update-personType-input").value;
     let firstName = document.querySelector("#update-firstName-input").value;
@@ -514,7 +519,8 @@ function GetUpdatePersonInformation() {
     let jobTitle = document.querySelector("#update-jobTitle-input").value;
 
     // Call the function to update a person to the system
-    UpdatePerson(personId, personType, firstName, lastName, phoneNumber, jobTitle);
+    await UpdatePerson(personId, personType, firstName, lastName, phoneNumber, jobTitle);
+    GenerateAllPersonsContainer();
 }
 
 // Function to update a Person in the system by their ID
@@ -585,22 +591,32 @@ function GenerateDeletePersonContainer() {
 }
 
 // Function to get Person information from input fields
-function DeletePersonIdInformation() {
+async function DeletePersonIdInformation() {
     let personId = document.querySelector("#deletePerson-input").value;
 
     // Call the function to get the person from the system
-    DeletePersonById(personId);
+    await DeletePersonById(personId);
+    GenerateAllPersonsContainer();
 }
 
 //Function to delete person
 async function DeletePersonById(id) {
-    try {
-        await fetch(`${BASE_URL}/Person/${id}`, { method: 'DELETE' });
-        console.log("Person Id " + id + " was removed from the system");
-        alert("Person Id " + id + " was removed from the system");
-    } catch (Error) {
-        console.error(Error);
-    }
+    try 
+    {
+        let response = await fetch(`${BASE_URL}/Person/${id}`, { method: 'DELETE' });
+        if (response.ok) 
+            {
+                console.log("Person Id " + id + " was removed from the system")
+                alert("Person Id " + id + " was removed from the system");
+            }
+            else
+            {
+                alert("Person ID was not located please try again.");
+            }
+        }
+        catch (Error) {
+            console.error(Error);
+        }
 }
 
 //----------------------------------------------//
@@ -610,7 +626,7 @@ async function DeletePersonById(id) {
 // Function to build out the code for the container
 async function GenerateAllPersonsContainer() {
 
-    TeardownPersonTableContainer();
+    TeardownPersonTableContainer(); 
 
     // Create Div to hold Header Text for table
     let personAllHeaderDiv = document.createElement("div");
@@ -695,10 +711,6 @@ function TeardownPersonTableContainer() {
 }
 //-----------------------------------------------------//
 // Add New Pet Container Creation Functions            //
-// This will test adding a new PET record to the DB    // 
-// AND                                                 // 
-// Then add the new pets inital VISIT record to the DB //      
-// This test mimicks how the orginal system works      //
 //-----------------------------------------------------//
 
 // Function to build out the code for the container
@@ -711,7 +723,7 @@ function GenerateNewPetContainer() {
     let petHeader = document.createElement("h2");
     petHeader.type = 'text';
     petHeader.setAttribute("style", "background-color: #eed5d7;");
-    petHeader.textContent = "Add a new Pet and thier first Visit to System"
+    petHeader.textContent = "Add a new Pet into the System"
 
     // Create section informational header for New Pet Section
     let personIdHeader = document.createElement("h3");
@@ -834,7 +846,7 @@ function GenerateNewPetContainer() {
 }
 
 // Function to get Pet information from input fields
-function GetAddPetInformation() {
+async function GetAddPetInformation() {
     let personId = document.querySelector("#personId-input").value;
     let petName = document.querySelector("#petName-input").value;
     let petColor = document.querySelector("#petColor-input").value;
@@ -846,10 +858,8 @@ function GetAddPetInformation() {
     let seenBy = document.querySelector("#seenBy-input").value;
 
     // Call the function to add a new Pet to the system
-    AddNewPet(personId, petName, petColor, petFurType, petGender, petWeight, petAge, petInside, seenBy);
-
-    // Call the function to add a new visit to the system
-    AddNewVisit(personId, petWeight, petAge, petInside, seenBy);
+    await AddNewPet(personId, petName, petColor, petFurType, petGender, petWeight, petAge, petInside, seenBy);
+    GenerateAllPetsContainer();
 }
 
 // Function to add new Pet into the system
@@ -881,38 +891,6 @@ async function AddNewPet(personId, petName, petColor, petFurType, petGender, pet
         return data; 
     } catch (e) {
         console.error("Error Adding New Pet:", e); // Added error logging
-    }
-}
-
-// Function to add new Visit into the system
-// This function uses PetID of  for all testing purposes. 
-//If your DB does not have a PetId of 3 you will need to update to use a id numbeer in our DB
-// In the real code we will need to look up the newly added Pets ID number before adding an inital Vist to the table
-async function AddNewVisit(personId, petWeight, petAge, petInside, seenBy) {
-    try {
-        let response = await fetch(`${BASE_URL}/Visits`, {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json" // Corrected the content type to 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    "petId": 1023,
-                    "personId": personId,
-                    "weight": petWeight,
-                    "age": petAge,
-                    "inSidePet": petInside,
-                    "appointmentDate": Date,
-                    "seenBy": seenBy
-                })
-        });
-
-        let data = await response.json();
-        new_visit = data;
-        console.log(new_visit);
-        console.log(data);
-    } catch (e) {
-        console.error("Error Adding New Visit:", e); // Added error logging
     }
 }
 
@@ -968,7 +946,9 @@ async function GetPetById(id) {
         let data = await response.json();
         console.log(data);
         return data;
-    } catch (Error) {
+    } 
+    catch (Error) {
+        alert("Pet ID was not located please try again."); 
         console.error(Error);
     }
 }
@@ -1034,12 +1014,11 @@ function TeardownPetDisplayTableContainer() {
 
 // Function to build out the code for the container
 function GenerateUpdatePetContainer() {
-
-    // Create the main sign up container div
+    // Create the Update Pet container div
     let updatePetDiv = document.createElement("div");
     updatePetDiv.id = "update-pets-container";
 
-    // Create header for Update Pet Section 
+    // Create header for Update Pet Section  
     let updatePetHeader = document.createElement("h2");
     updatePetHeader.type = 'text';
     updatePetHeader.setAttribute("style", "background-color: #eed5d7;");
@@ -1058,7 +1037,7 @@ function GenerateUpdatePetContainer() {
     // Create the Person ID input field and label
     let personIdInput = document.createElement('input');
     personIdInput.type = 'text';
-    personIdInput.id = 'update-personId-input';
+    personIdInput.id = 'update-petpersonId-input';
     personIdInput.style.display = 'block';
 
     let personIdInputLabel = document.createElement('label');
@@ -1196,9 +1175,9 @@ function GenerateUpdatePetContainer() {
 }
 
 // Function to get Pet information from input fields
-function GetUpdatePetInformation() {
+async function GetUpdatePetInformation() {
     let id = document.querySelector("#update-petId-input").value;
-    let personId = document.querySelector("#update-personId-input").value;
+    let personId = document.querySelector("#update-petpersonId-input").value;
     let petName = document.querySelector("#update-petName-input").value;
     let color = document.querySelector("#update-petColor-input").value;
     let furType = document.querySelector("#update-petFurType-input").value;
@@ -1211,7 +1190,8 @@ function GetUpdatePetInformation() {
     let rainbowBridgeDate = document.querySelector("#update-rainbowBridgeDate-input").value;
 
     // Call the function to update a Pet in the system
-    UpdatePet(id, personId, petName, color, furType, gender, petWeight, petAge, petInside, appointmentDate, seenBy, rainbowBridgeDate);
+    await UpdatePet(id, personId, petName, color, furType, gender, petWeight, petAge, petInside, appointmentDate, seenBy, rainbowBridgeDate);
+    GenerateAllPetsContainer();
 }
 
 // Function to update a pet in the system by their ID
@@ -1291,20 +1271,30 @@ function GenerateDeletePetContainer() {
 }
 
 // Function to get Pet information from input fields
-function DeletePetIdInformation() {
+async function DeletePetIdInformation() {
     let petId = document.querySelector("#deletePet-input").value;
 
     // Call the function to get the Pet from the system
-    DeletePetById(petId);
+    await DeletePetById(petId);
+    GenerateAllPetsContainer();
 }
 
 //Function to delete Pet
 async function DeletePetById(id) {
-    try {
-        await fetch(`${BASE_URL}/Pets/${id}`, { method: 'DELETE' });
-        console.log("Pet Id " + id + " was removed from the system")
-        alert("Pet Id " + id + " was removed from the system");
-    } catch (Error) {
+    try 
+    {
+        let response = await fetch(`${BASE_URL}/Pets/${id}`, { method: 'DELETE' });
+        if (response.ok) 
+        {
+            console.log("Pet Id " + id + " was removed from the system")
+            alert("Pet Id " + id + " was removed from the system");
+        }
+        else
+        {
+            alert("Pet ID was not located please try again.");
+        }
+    }
+    catch (Error) {
         console.error(Error);
     }
 }
@@ -1412,6 +1402,165 @@ function TeardownPetTableContainer() {
     }
 }
 
+//-----------------------------------------------------//
+// Add New Visit Container Creation Functions          //
+//-----------------------------------------------------//
+
+// Function to build out the code for the container
+function GenerateNewVisitContainer() {
+    // Create the main sign up container div
+    let visitDiv = document.createElement("div");
+    visitDiv.id = "newvisit-container";
+
+    // Create header for New Visit Section 
+    let visitHeader = document.createElement("h2");
+    visitHeader.type = 'text';
+    visitHeader.setAttribute("style", "background-color: #eed5d7;");
+    visitHeader.textContent = "Add a new Visit into the System"
+
+        // Create section informational header for New Visit Section
+    let visitPetIdHeader = document.createElement("h3");
+    visitPetIdHeader.type = 'text';
+    visitPetIdHeader.textContent = "You need to find a valid PetId & PersonId from your local DB to use here"
+
+    // Create the PetId input field and label
+    let visitPetIdInput = document.createElement('input');
+    visitPetIdInput.type = 'number';
+    visitPetIdInput.id = 'visitPetId-input';
+    visitPetIdInput.style.display = 'block';
+
+    let visitPetIdInputLabel = document.createElement('label');
+    visitPetIdInputLabel.textContent = "Pet Id";
+
+	// Create the PersonId input field and label
+    let visitPersonIdInput = document.createElement('input');
+    visitPersonIdInput.type = 'number';
+    visitPersonIdInput.id = 'visitPersonId-input';
+    visitPersonIdInput.style.display = 'block';
+
+    let visitPersonIdInputLabel = document.createElement('label');
+    visitPersonIdInputLabel.textContent = "Person Id";
+
+    // Create the Gender input field and label
+    let visitGenderInput = document.createElement('input');
+    visitGenderInput.type = 'text';
+    visitGenderInput.id = 'visitGender-input';
+    visitGenderInput.style.display = 'block';
+
+    let visitGenderInputLabel = document.createElement('label');
+    visitGenderInputLabel.textContent = "Visit Gender";
+
+    // Create the Weight input field and label
+    let visitWeightInput = document.createElement('input');
+    visitWeightInput.type = 'number';
+    visitWeightInput.id = 'visitWeight-input';
+    visitWeightInput.style.display = 'block';
+
+    let visitWeightInputLabel = document.createElement('label');
+    visitWeightInputLabel.textContent = "Visit Weight";
+
+    // Create the Age input field and label
+    let visitAgeInput = document.createElement('input');
+    visitAgeInput.type = 'number';
+    visitAgeInput.id = 'visitAge-input';
+    visitAgeInput.style.display = 'block';
+
+    let visitAgeInputLabel = document.createElement('label');
+    visitAgeInputLabel.textContent = "Visit Age";
+
+    // Create the InSideVisit input field and label   
+    let visitInsideInput = document.createElement('input');
+    visitInsideInput.type = 'checkbox';
+    visitInsideInput.id = 'visitInside-input';
+    //visitInsideInput.style = 'text-transform:lowercase';
+    visitInsideInput.style.display = 'block';
+
+    let visitInsideInputLabel = document.createElement('label');
+    visitInsideInputLabel.textContent = "InSideVisit - True or False";
+
+    // Create the SeenBy input field and label   
+    let visitSeenByInput = document.createElement('input');
+    visitSeenByInput.type = 'text';
+    visitSeenByInput.id = 'visitSeenBy-input';
+    visitSeenByInput.style.display = 'block';
+
+    let visitSeenByInputLabel = document.createElement('label');
+    visitSeenByInputLabel.textContent = "Seen By";
+
+    // Create the Create New Visit button
+    let visitButton = document.createElement('button');
+    visitButton.textContent = "Create New Visit";
+
+    // Append the VisitDiv container to the visit container
+    addVisitContainerDiv.appendChild(visitDiv);
+
+    // Append the username and password fields and labels to the login container
+    visitDiv.appendChild(visitHeader);
+    visitDiv.appendChild(visitPetIdHeader);
+    visitDiv.appendChild(visitPersonIdInputLabel);
+    visitDiv.appendChild(visitPersonIdInput);
+    visitDiv.appendChild(visitPetIdInputLabel);
+    visitDiv.appendChild(visitPetIdInput);  
+    visitDiv.appendChild(visitWeightInputLabel);
+    visitDiv.appendChild(visitWeightInput);
+    visitDiv.appendChild(visitAgeInputLabel);
+    visitDiv.appendChild(visitAgeInput);
+    visitDiv.appendChild(visitInsideInputLabel);
+    visitDiv.appendChild(visitInsideInput);
+    visitDiv.appendChild(visitSeenByInputLabel);
+    visitDiv.appendChild(visitSeenByInput);
+    visitDiv.appendChild(visitButton);
+
+    // Add an event listener to the login button to handle login
+    visitButton.addEventListener("click", GetAddVisitInformation);
+}
+
+// Function to get Visit information from input fields
+async function GetAddVisitInformation() {
+    let visitPetId = document.querySelector("#visitPetId-input").value;
+    let visitPersonId = document.querySelector("#visitPersonId-input").value;
+    let visitWeight = document.querySelector("#visitWeight-input").value;
+    let visitAge = document.querySelector("#visitAge-input").value;
+    let visitInside = document.querySelector("#visitInside-input").checked;
+    let visitSeenBy = document.querySelector("#visitSeenBy-input").value;
+
+    await AddNewVisit(visitPetId, visitPersonId, visitWeight, visitAge, visitInside, visitSeenBy);
+    GenerateAllVisitsContainer();
+}
+
+// Function to add new Visit into the system
+async function AddNewVisit(visitPetId, visitPersonId, visitWeight, visitAge, visitInside, visitSeenBy)
+{
+    try 
+    {
+        let response = await fetch(`${BASE_URL}/Visits`, {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json" // Corrected the content type to 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "petId": visitPetId,
+                    "personId": visitPersonId,
+                    "weight": visitWeight,
+                    "age": visitAge,
+                    "inSideVisit": visitInside,
+                    "appointmentDate": Date,
+                    "seenBy": visitSeenBy
+                })
+        });
+
+        let data = await response.json();
+        new_visit = data;
+        console.log(new_visit);
+        console.log(data);
+    } 
+    catch (e) 
+    {
+        console.error("Error Adding New Visit:", e); // Added error logging
+    }
+}
+
 //----------------------------------------------//
 // Get Visit Container Creation Functions       //
 //----------------------------------------------//
@@ -1464,6 +1613,7 @@ async function GetVisitById(id) {
         console.log(data);
         return data;
     } catch (Error) {
+        alert("Visit ID was not located please try again."); 
         console.error(Error);
     }
 }
@@ -1479,11 +1629,11 @@ function GenerateVisitDisplayTable(visit) {
         <th>Visit Id</th>
         <th>Pet Id</th>
         <th>Person Id</th>
-        <th>Pet Weight</th>
-        <th>Pet Age</th>
-        <th>Pet InSidePet</th>
-        <th>Pet AppointmentDate</th>
-        <th>Pet SeenBy</th>
+        <th>Visit Weight</th>
+        <th>Visit Age</th>
+        <th>Visit InSidePet</th>
+        <th>Visit AppointmentDate</th>
+        <th>Visit SeenBy</th>
     </tr>`;
 
     // This section adds the passed in data into the table
@@ -1571,11 +1721,11 @@ function GenerateVisitTable(visits) {
         <th>Visit Id</th>
         <th>Pet Id</th>
         <th>Person Id</th>
-        <th>Pet Weight</th>
-        <th>Pet Age</th>
-        <th>Pet InSidePet</th>
-        <th>Pet AppointmentDate</th>
-        <th>Pet SeenBy</th>
+        <th>Visit Weight</th>
+        <th>Visit Age</th>
+        <th>Visit InSidePet</th>
+        <th>Visit AppointmentDate</th>
+        <th>Visit SeenBy</th>
     </tr>`;
 
     // This section adds the passed in data into the table
