@@ -35,6 +35,9 @@ const getVisitContainerDiv = document.querySelector("#get-visits-container");
 const getVisitDisplayContainerDiv = document.querySelector("#get-visit-display-container");
 const allVisitsContainerDiv = document.querySelector("#all-visits-container");
 
+// Logout Container
+const logoutContainerDiv = document.querySelector("#logout-container");
+
 //------------------------------------//
 // Login Container Creation Functions //
 //------------------------------------//
@@ -83,7 +86,6 @@ function GenerateLoginContainer() {
     loginButton.textContent = "Login";
 
     // Append the UserName and UserPassword fields and labels to the Login container
-    // loginUserContainerDiv.appendChild(pageTitle);
     loginUserContainerDiv.appendChild(loginHeader);
     loginUserContainerDiv.appendChild(usernameInputLabel);
     loginUserContainerDiv.appendChild(usernameInput);
@@ -172,6 +174,8 @@ function GenerateHomePageContainer() {
     GenerateNewVisitContainer();
     GenerateGetVisitContainer();
     GenerateAllVisitsContainer();
+
+    GenerateLogoutContainer();
 }
 
 //---------------------------------------------//
@@ -1971,4 +1975,29 @@ function TeardownVisitTableContainer() {
             visitTableDiv.firstChild.remove();
         }
     }
+}
+
+//------------------------------------//
+//Logout Container Creation Functions //
+//------------------------------------//
+
+// Function to build out the code for the container
+function GenerateLogoutContainer() {
+    // Create the logout container div
+    let logoutDiv = document.createElement("div");
+    logoutDiv.id = "logout-container";
+
+
+    // Create the Logout button
+    let logoutButton = document.createElement('button');
+    logoutButton.textContent = "Logout";
+
+    // Append the logout button
+    logoutContainerDiv.appendChild(logoutButton);
+    logoutButton.addEventListener("click", function(){ alert("You have been logged out!");});
+    logoutButton.addEventListener("click", ()=>{window.location.replace("testing.html");});
+
+    // Append the UserName and UserPassword fields and labels to the Login container
+    logoutContainerDiv.appendChild(logoutButton);
+
 }
