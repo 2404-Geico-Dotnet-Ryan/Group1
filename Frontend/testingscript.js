@@ -17,6 +17,7 @@ const homePageContainerDiv = document.querySelector("#home-page-container");
 
 const addPersonContainerDiv = document.querySelector("#add-persons-container");
 const addLoginContainerDiv = document.querySelector("#add-login-container");
+const allLoginsContainerDiv = document.querySelector("#all-logins-container");
 const deleteLoginContainerDiv = document.querySelector("#delete-login-container");
 const getPersonContainerDiv = document.querySelector("#get-persons-container");
 const getPersonDisplayContainerDiv = document.querySelector("#get-person-display-container");
@@ -161,6 +162,7 @@ function GenerateHomePageContainer() {
 
     GenerateNewPersonContainer();
     GenerateNewLoginContainer();
+    GenerateAllLoginsContainer();
     GenerateDeleteLoginContainer();
     GenerateGetPersonContainer();
     GenerateUpdatePersonContainer();
@@ -402,7 +404,7 @@ async function GetNewLoginInformation() {
     
     // Call the function to add a new login to the system
     await AddNewLogin(personId, userName, userPassword);
-    // GenerateAllLoginsContainer();
+    GenerateAllLoginsContainer();
 }
 
 // Function to add new Login into the system
@@ -960,7 +962,6 @@ function GenerateLoginTable(logins) {
         <th>Person Id</th>
         <th>User Name</th>
         <th>Password</th>
-        <th>Access Level</th>
         </tr>`;
 
     // This section adds the passed in data into the table
@@ -968,8 +969,7 @@ function GenerateLoginTable(logins) {
         loginTable += `<tr>
         <td>${l.personId}</td>
         <td>${l.userName}</td>
-        <td>${l.password}</td>
-        <td>${l.accessLevel}</td>
+        <td>${l.userPassword}</td>
         </tr>`;
     });
 
