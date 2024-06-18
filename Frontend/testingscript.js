@@ -17,6 +17,7 @@ const homePageContainerDiv = document.querySelector("#home-page-container");
 
 const addPersonContainerDiv = document.querySelector("#add-persons-container");
 const addLoginContainerDiv = document.querySelector("#add-login-container");
+const deleteLoginContainerDiv = document.querySelector("#delete-login-container");
 const getPersonContainerDiv = document.querySelector("#get-persons-container");
 const getPersonDisplayContainerDiv = document.querySelector("#get-person-display-container");
 const updatePersonContainerDiv = document.querySelector("#update-persons-container");
@@ -160,6 +161,7 @@ function GenerateHomePageContainer() {
 
     GenerateNewPersonContainer();
     GenerateNewLoginContainer();
+    GenerateDeleteLoginContainer();
     GenerateGetPersonContainer();
     GenerateUpdatePersonContainer();
     GenerateDeletePersonContainer();
@@ -430,6 +432,70 @@ async function AddNewLogin(personId, userName, userPassword) {
     }
 }
 
+//---------------------------------------------//
+// Add New Login Container Creation Functions //
+//---------------------------------------------//
+// Function to build out the code for the container
+function GenerateDeleteLoginContainer() {
+    // Create header for Login Delete Section 
+    let deleteLoginHeader = document.createElement("h2");
+    deleteLoginHeader.type = 'text';
+    deleteLoginHeader.setAttribute("style", "background-color: #eed5d7;");
+    deleteLoginHeader.textContent = "Remove a Login from the System"
+
+    // Create the deleteLogin input field and label
+    let deleteLoginInput = document.createElement('input');
+    deleteLoginInput.type = 'number';
+    deleteLoginInput.placeholder = "Enter Login ID"; //add default text in field
+    deleteLoginInput.setAttribute("required", "required")//makes field required 
+    deleteLoginInput.id = 'deleteLogin-input';
+    deleteLoginInput.style.display = 'block';
+
+    let deleteLoginInputLabel = document.createElement('label');
+    deleteLoginInputLabel.textContent = " Login ID to Remove ";
+
+    // Create the DeleteLogin button
+    let deleteLoginButton = document.createElement('button');
+    deleteLoginButton.textContent = "Remove Login";
+
+    // Append the Delete Login fields and labels to the container
+    deleteLoginContainerDiv.appendChild(deleteLoginHeader);
+    deleteLoginContainerDiv.appendChild(deleteLoginInputLabel);
+    deleteLoginContainerDiv.appendChild(deleteLoginInput);
+    deleteLoginContainerDiv.appendChild(deleteLoginButton);
+
+    // Add an event listener to the Delete Login button to handle login
+    deleteLoginButton.addEventListener("click", DeleteLoginIdInformation);
+}
+
+// Function to get Login information from input fields
+async function DeleteLoginIdInformation() {
+    let loginId = document.querySelector("#deleteLogin-input").value;
+
+    // Call the function to get the login from the system
+    await DeleteLoginById(loginId);
+    // GenerateAllLoginsContainer();
+}
+
+//Function to delete login
+async function DeleteLoginById(loginId) {
+    try 
+    {
+        let response = await fetch(`${BASE_URL}/Login/${loginId}`, { method: 'DELETE' });
+        if (response.ok) 
+            {
+                console.log("Login Id " + loginId + " was removed from the system")
+                alert("Login Id " + loginId + " was removed from the system");
+            }
+            else
+            {
+                alert("Login ID was not located please try again.");
+            }
+        }
+        catch (Error) {
+            console.error(Error);
+        }
+}
 
 //----------------------------------------------//
 // Get Person Container Creation Functions      //
