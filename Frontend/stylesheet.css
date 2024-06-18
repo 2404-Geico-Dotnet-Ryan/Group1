@@ -1,8 +1,8 @@
 body {
-    background: #eed5d7;
-    background: -moz-linear-gradient(left, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
-    background: -webkit-linear-gradient(left, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
-    background: linear-gradient(to right, #eed5d7 0%, #e8a0a0 50%, #e67f86 100%);
+    background: #f29da4;
+    background: -moz-linear-gradient(left, #eed5d7 0%, #ffffff 25%, #ffffff 75%, #eed5d7 100%);
+    background: -webkit-linear-gradient(left, #eed5d7 0%, #ffffff 25%, #ffffff 75%,  #eed5d7 100%);
+    background: linear-gradient(to right, #eed5d7 0%, #ffffff 25%, #ffffff 75%, #eed5d7 100%);
     color: #5a0718;
 }
 /* Classes we use periods before the class name */
@@ -16,6 +16,7 @@ body {
     font-size: 100px;
     color: #5a0718;
     text-align: center;
+    text-shadow: #060001;
 }
 
 /* a {

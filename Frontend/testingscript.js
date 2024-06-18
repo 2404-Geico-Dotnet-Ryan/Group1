@@ -44,15 +44,15 @@ GenerateLoginContainer();
 // Function to build out the code for the container
 function GenerateLoginContainer() {
 
-    let pageTitle = document.createElement("h1");
-    pageTitle.type = 'text';
-    pageTitle.id = "Title";
-    pageTitle.textContent = "Welcome to Kitty City!"
+    // let pageTitle = document.createElement("h1");
+    // pageTitle.type = 'text';
+    // pageTitle.id = "Title";
+    // pageTitle.textContent = "Welcome to Kitty City!"
 
     // Create header for Login Seciton 
     let loginHeader = document.createElement("h2");
     loginHeader.type = 'text';
-    loginHeader.setAttribute("style", "background-color: #eed5d7;");
+    // loginHeader.setAttribute("style", "background-color: #eed5d7;");
     loginHeader.textContent = "Kitty City Vet System User Login"
 
     // Create the UserName input field and label
@@ -82,7 +82,7 @@ function GenerateLoginContainer() {
     loginButton.textContent = "Login";
 
     // Append the UserName and UserPassword fields and labels to the Login container
-    loginUserContainerDiv.appendChild(pageTitle);
+    // loginUserContainerDiv.appendChild(pageTitle);
     loginUserContainerDiv.appendChild(loginHeader);
     loginUserContainerDiv.appendChild(usernameInputLabel);
     loginUserContainerDiv.appendChild(usernameInput);
