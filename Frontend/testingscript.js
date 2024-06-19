@@ -1935,7 +1935,7 @@ function GenerateNewVisitContainer() {
     visitInsideInput.style.display = 'block';
 
     let visitInsideInputLabel = document.createElement('label');
-    visitInsideInputLabel.textContent = "InSideVisit - True or False";
+    visitInsideInputLabel.textContent = "InSidePet - True or False";
 
     // Create the SeenBy input field and label   
     let visitSeenByInput = document.createElement('input');
@@ -2001,7 +2001,7 @@ async function AddNewVisit(visitPetId, visitPersonId, visitWeight, visitAge, vis
                     "personId": visitPersonId,
                     "weight": visitWeight,
                     "age": visitAge,
-                    "inSideVisit": visitInside,
+                    "inSidePet": visitInside,
                     "appointmentDate": Date,
                     "seenBy": visitSeenBy
                 })
