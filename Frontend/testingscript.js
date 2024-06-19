@@ -160,10 +160,18 @@ async function LoginUser(userName, userPassword) {
 //----------------------------------------//
 function GenerateHomePageContainer() {
 
+    if (current_user.accessLevel == 1)
+        {
+            GenerateNewLoginContainerLevelOne();
+            GenerateDeleteLoginContainer();
+            GenerateAllLoginsContainer();
+        }
+    else
+        {
+            GenerateNewLoginContainerLevelTwo();
+        };
+
     GenerateNewPersonContainer();
-    GenerateNewLoginContainer();
-    GenerateAllLoginsContainer();
-    GenerateDeleteLoginContainer();
     GenerateGetPersonContainer();
     GenerateUpdatePersonContainer();
     GenerateDeletePersonContainer();
@@ -180,6 +188,301 @@ function GenerateHomePageContainer() {
     GenerateAllVisitsContainer();
 
     GenerateLogoutContainer();
+}
+
+//---------------------------------------------//
+// ACCESS LEVEL TWO                            //
+// Add New Login Container Creation Functions  //
+//---------------------------------------------//
+
+// Function to build out the code for the container
+function GenerateNewLoginContainerLevelmTwo() {
+    // Create the new Login container div
+    let loginDiv = document.createElement("div");
+    loginDiv.id = "newlogin-container";
+
+    // Create header for New Login Section 
+    let loginHeader = document.createElement("h2");
+    loginHeader.type = 'text';
+    loginHeader.setAttribute("style", "background-color: #eed5d7;");
+    loginHeader.textContent = "Your access level does not allow you to view Kity City system login in data";
+
+ // Append the Login Div container to the Login container
+    addLoginContainerDiv.appendChild(loginDiv);
+
+    // Append the username and password fields and labels to the login container
+    loginDiv.appendChild(loginHeader);
+}
+
+//---------------------------------------------//
+// ACCESS LEVEL ONE                            //
+// Add New Login Container Creation Functions  //
+//---------------------------------------------//
+
+// Function to build out the code for the container
+function GenerateNewLoginContainerLevelOne() {
+    // Create the new Login container div
+    let loginDiv = document.createElement("div");
+    loginDiv.id = "newlogin-container";
+
+    // Create header for New Login Section 
+    let loginHeader = document.createElement("h2");
+    loginHeader.type = 'text';
+    loginHeader.setAttribute("style", "background-color: #eed5d7;");
+    loginHeader.textContent = "Add a new Login to the System";
+
+    // Select Person ID
+    let personIdHeader = document.createElement("h3");
+    personIdHeader.type = 'text';
+    personIdHeader.textContent = "Enter the Person ID to create a new Login";
+
+    let personIdInput = document.createElement('input');
+    personIdInput.type = 'number';
+    personIdInput.id = 'newlogin-personId-input';
+    personIdInput.style.display = 'block';
+
+    let personIdInputLabel = document.createElement('label');
+    personIdInputLabel.textContent = "Person ID";
+
+    // Create the User Name input field and label
+    let userNameInput = document.createElement('input');
+    userNameInput.type = 'text';
+    userNameInput.id = 'newlogin-userName-input';
+    userNameInput.style.display = 'block';
+
+    let userNameInputLabel = document.createElement('label');
+    userNameInputLabel.textContent = "User Name";
+
+    // Create the Password input field and label
+    let userPasswordInput = document.createElement('input');
+    userPasswordInput.type = 'text';
+    userPasswordInput.id = 'newlogin-userPassword-input';
+    userPasswordInput.style.display = 'block';
+
+    let userPasswordInputLabel = document.createElement('label');
+    userPasswordInputLabel.textContent = "Password";
+
+    // // Create the Access Level input field and label
+    // let accessLevelInput = document.createElement('input');
+    // accessLevelInput.type = 'text';
+    // accessLevelInput.id = 'accessLevel-input';
+    // accessLevelInput.style.display = 'block';
+
+    // let accessLevelInputLabel = document.createElement('label');
+    // accessLevelInputLabel.textContent = "Access Level";
+
+    // Create the Create New Login button
+    let loginButton = document.createElement('button');
+    loginButton.textContent = "Create New Login";
+
+    // Append the Login Div container to the Login container
+    addLoginContainerDiv.appendChild(loginDiv);
+
+    // Append the username and password fields and labels to the login container
+    loginDiv.appendChild(loginHeader);
+    loginDiv.appendChild(personIdHeader);
+    loginDiv.appendChild(personIdInputLabel);
+    loginDiv.appendChild(personIdInput);
+    loginDiv.appendChild(userNameInputLabel);
+    loginDiv.appendChild(userNameInput);
+    loginDiv.appendChild(userPasswordInputLabel);
+    loginDiv.appendChild(userPasswordInput);
+    // loginDiv.appendChild(accessLevelInputLabel);
+    // loginDiv.appendChild(accessLevelInput);
+    loginDiv.appendChild(loginButton);
+
+    // Add an event listener to the login button to handle login
+    loginButton.addEventListener("click", GetNewLoginInformation);
+}
+
+// Function to get Login information from input fields
+async function GetNewLoginInformation() {
+    let personId = document.querySelector("#newlogin-personId-input").value;
+    let userName = document.querySelector("#newlogin-userName-input").value;
+    let userPassword = document.querySelector("#newlogin-userPassword-input").value;
+    // let accessLevel = document.querySelector("#accessLevel-input").value;
+    
+    // Call the function to add a new login to the system
+    await AddNewLogin(personId, userName, userPassword);
+    GenerateAllLoginsContainer();
+}
+
+// Function to add new Login into the system
+async function AddNewLogin(personId, userName, userPassword) {
+    try {
+        let response = await fetch(`${BASE_URL}/Login`, {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json" // Corrected the content type to 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    
+                    "userName": userName,
+                    "userPassword": userPassword,
+                    "personId": personId
+                    // "accessLevel": accessLevel,
+                })
+        });
+
+        let data = await response.json();
+        new_login = data;
+        console.log(new_login);
+        console.log(data);
+    } catch (e) {
+        console.error("Error Adding New Login:", e); // Added error logging
+    }
+}
+
+//----------------------------------------------//
+// Delete Login Container Creation Functions   //
+//----------------------------------------------//
+
+// Function to build out the code for the container
+function GenerateDeleteLoginContainer() {
+    // Create header for Login Delete Section 
+    let deleteLoginHeader = document.createElement("h2");
+    deleteLoginHeader.type = 'text';
+    deleteLoginHeader.setAttribute("style", "background-color: #eed5d7;");
+    deleteLoginHeader.textContent = "Remove a Login from the System"
+
+    // Create the deleteLogin input field and label
+    let deleteLoginInput = document.createElement('input');
+    deleteLoginInput.type = 'number';
+    deleteLoginInput.placeholder = "Enter Login ID"; //add default text in field
+    deleteLoginInput.setAttribute("required", "required")//makes field required 
+    deleteLoginInput.id = 'deleteLogin-input';
+    deleteLoginInput.style.display = 'block';
+
+    let deleteLoginInputLabel = document.createElement('label');
+    deleteLoginInputLabel.textContent = " Login ID to Remove ";
+
+    // Create the DeleteLogin button
+    let deleteLoginButton = document.createElement('button');
+    deleteLoginButton.textContent = "Remove Login";
+
+    // Append the Delete Login fields and labels to the container
+    deleteLoginContainerDiv.appendChild(deleteLoginHeader);
+    deleteLoginContainerDiv.appendChild(deleteLoginInputLabel);
+    deleteLoginContainerDiv.appendChild(deleteLoginInput);
+    deleteLoginContainerDiv.appendChild(deleteLoginButton);
+
+    // Add an event listener to the Delete Login button to handle login
+    deleteLoginButton.addEventListener("click", DeleteLoginIdInformation);
+}
+
+// Function to get Login information from input fields
+async function DeleteLoginIdInformation() {
+    let loginId = document.querySelector("#deleteLogin-input").value;
+
+    // Call the function to get the login from the system
+    await DeleteLoginById(loginId);
+    GenerateAllLoginsContainer();
+}
+
+//Function to delete login
+async function DeleteLoginById(loginId) {
+    try 
+    {
+        let response = await fetch(`${BASE_URL}/Login/${loginId}`, { method: 'DELETE' });
+        if (response.ok) 
+            {
+                console.log("Login Id " + loginId + " was removed from the system")
+                alert("Login Id " + loginId + " was removed from the system");
+            }
+            else
+            {
+                alert("Login ID was not located please try again.");
+            }
+        }
+        catch (Error) {
+            console.error(Error);
+        }
+}
+
+//----------------------------------------------//
+// List All Logins Container Creation Functions //
+//----------------------------------------------//
+
+// Function to build out the code for the container
+async function GenerateAllLoginsContainer() {
+
+    TeardownLoginTableContainer(); 
+
+    // Create Div to hold Header Text for table
+    let loginAllHeaderDiv = document.createElement("div");
+    loginAllHeaderDiv.id = "loginAllHeader-container";
+
+    // Create header for All Logins table 
+    let loginAllHeader = document.createElement("h2");
+    loginAllHeader.type = 'text';
+    loginAllHeader.setAttribute("style", "background-color: #eed5d7;");
+    loginAllHeader.textContent = "All Logins in the system";
+
+    allLoginsContainerDiv.appendChild(loginAllHeaderDiv);
+    loginAllHeaderDiv.appendChild(loginAllHeader);
+
+    let loginAllDiv = document.createElement("div");
+    loginAllDiv.id = "loginAll-container";
+    allLoginsContainerDiv.appendChild(loginAllDiv);
+
+    // Call to get a list of all Logins in the system
+    // then passed the list into the function that will 
+    // build and load a table with the data
+    let logins = await GetAllLogins();
+    loginAllDiv.innerHTML = GenerateLoginTable(logins);   
+}
+
+// Function to get a list of all Logins in the system
+async function GetAllLogins() {
+    try {
+        let response = await fetch(`${BASE_URL}/Login`);
+        let data = await response.json();
+        console.log(data);
+        return data;
+    } catch (Error) {
+        console.error(Error);
+    }
+}
+
+// Function to build a table and then load it with the passed in data 
+function GenerateLoginTable(logins) {
+
+    // This line declairs a new table node/section in your HTML
+    let loginTable = '<table>';
+
+    // This section builds the Column Header Names
+    loginTable += `<tr>
+        <th>Person Id</th>
+        <th>User Name</th>
+        <th>Encrypted Password</th>
+        </tr>`;
+
+    // This section adds the passed in data into the table
+    logins.forEach(l => {
+        loginTable += `<tr>
+        <td>${l.personId}</td>
+        <td>${l.userName}</td>
+        <td>${l.userPassword}</td>
+        </tr>`;
+    });
+
+    // This line closes out the table nod/section in your HTML
+    loginTable += '</table>';
+
+    return loginTable;
+}
+
+function TeardownLoginTableContainer() {
+    // Find the Display All Login container
+    let loginTableDiv = document.querySelector("#all-logins-container");
+
+    // If the Display All Login container exists, remove all its children
+    if (loginTableDiv != null) {
+        while (loginTableDiv.firstChild) {
+            loginTableDiv.firstChild.remove();
+        }
+    }
 }
 
 //---------------------------------------------//
@@ -312,191 +615,6 @@ async function AddNewPerson(personType, firstName, lastName, phoneNumber, jobTit
     } catch (e) {
         console.error("Error Adding New Person:", e); // Added error logging
     }
-}
-
-
-//---------------------------------------------//
-// Add New Login Container Creation Functions //
-//---------------------------------------------//
-
-// Function to build out the code for the container
-function GenerateNewLoginContainer() {
-    // Create the new Login container div
-    let loginDiv = document.createElement("div");
-    loginDiv.id = "newlogin-container";
-
-    // Create header for New Login Section 
-    let loginHeader = document.createElement("h2");
-    loginHeader.type = 'text';
-    loginHeader.setAttribute("style", "background-color: #eed5d7;");
-    loginHeader.textContent = "Add a new Login to the System";
-
-    // Select Person ID
-    let personIdHeader = document.createElement("h3");
-    personIdHeader.type = 'text';
-    personIdHeader.textContent = "Enter the Person ID to create a new Login";
-
-    let personIdInput = document.createElement('input');
-    personIdInput.type = 'number';
-    personIdInput.id = 'newlogin-personId-input';
-    personIdInput.style.display = 'block';
-
-    let personIdInputLabel = document.createElement('label');
-    personIdInputLabel.textContent = "Person ID";
-
-    // Create the User Name input field and label
-    let userNameInput = document.createElement('input');
-    userNameInput.type = 'text';
-    userNameInput.id = 'newlogin-userName-input';
-    userNameInput.style.display = 'block';
-
-    let userNameInputLabel = document.createElement('label');
-    userNameInputLabel.textContent = "User Name";
-
-    // Create the Password input field and label
-    let userPasswordInput = document.createElement('input');
-    userPasswordInput.type = 'text';
-    userPasswordInput.id = 'newlogin-userPassword-input';
-    userPasswordInput.style.display = 'block';
-
-    let userPasswordInputLabel = document.createElement('label');
-    userPasswordInputLabel.textContent = "Password";
-
-    // // Create the Access Level input field and label
-    // let accessLevelInput = document.createElement('input');
-    // accessLevelInput.type = 'text';
-    // accessLevelInput.id = 'accessLevel-input';
-    // accessLevelInput.style.display = 'block';
-
-    // let accessLevelInputLabel = document.createElement('label');
-    // accessLevelInputLabel.textContent = "Access Level";
-
-    // Create the Create New Login button
-    let loginButton = document.createElement('button');
-    loginButton.textContent = "Create New Login";
-
-    // Append the Login Div container to the Login container
-    addLoginContainerDiv.appendChild(loginDiv);
-
-    // Append the username and password fields and labels to the login container
-    loginDiv.appendChild(loginHeader);
-    loginDiv.appendChild(personIdHeader);
-    loginDiv.appendChild(personIdInputLabel);
-    loginDiv.appendChild(personIdInput);
-    loginDiv.appendChild(userNameInputLabel);
-    loginDiv.appendChild(userNameInput);
-    loginDiv.appendChild(userPasswordInputLabel);
-    loginDiv.appendChild(userPasswordInput);
-    // loginDiv.appendChild(accessLevelInputLabel);
-    // loginDiv.appendChild(accessLevelInput);
-    loginDiv.appendChild(loginButton);
-
-    // Add an event listener to the login button to handle login
-    loginButton.addEventListener("click", GetNewLoginInformation);
-}
-
-// Function to get Login information from input fields
-async function GetNewLoginInformation() {
-    let personId = document.querySelector("#newlogin-personId-input").value;
-    let userName = document.querySelector("#newlogin-userName-input").value;
-    let userPassword = document.querySelector("#newlogin-userPassword-input").value;
-    // let accessLevel = document.querySelector("#accessLevel-input").value;
-    
-    // Call the function to add a new login to the system
-    await AddNewLogin(personId, userName, userPassword);
-    GenerateAllLoginsContainer();
-}
-
-// Function to add new Login into the system
-async function AddNewLogin(personId, userName, userPassword) {
-    try {
-        let response = await fetch(`${BASE_URL}/Login`, {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json" // Corrected the content type to 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    
-                    "userName": userName,
-                    "userPassword": userPassword,
-                    "personId": personId
-                    // "accessLevel": accessLevel,
-                })
-        });
-
-        let data = await response.json();
-        new_login = data;
-        console.log(new_login);
-        console.log(data);
-    } catch (e) {
-        console.error("Error Adding New Login:", e); // Added error logging
-    }
-}
-
-//---------------------------------------------//
-// Add New Login Container Creation Functions //
-//---------------------------------------------//
-// Function to build out the code for the container
-function GenerateDeleteLoginContainer() {
-    // Create header for Login Delete Section 
-    let deleteLoginHeader = document.createElement("h2");
-    deleteLoginHeader.type = 'text';
-    deleteLoginHeader.setAttribute("style", "background-color: #eed5d7;");
-    deleteLoginHeader.textContent = "Remove a Login from the System"
-
-    // Create the deleteLogin input field and label
-    let deleteLoginInput = document.createElement('input');
-    deleteLoginInput.type = 'number';
-    deleteLoginInput.placeholder = "Enter Login ID"; //add default text in field
-    deleteLoginInput.setAttribute("required", "required")//makes field required 
-    deleteLoginInput.id = 'deleteLogin-input';
-    deleteLoginInput.style.display = 'block';
-
-    let deleteLoginInputLabel = document.createElement('label');
-    deleteLoginInputLabel.textContent = " Login ID to Remove ";
-
-    // Create the DeleteLogin button
-    let deleteLoginButton = document.createElement('button');
-    deleteLoginButton.textContent = "Remove Login";
-
-    // Append the Delete Login fields and labels to the container
-    deleteLoginContainerDiv.appendChild(deleteLoginHeader);
-    deleteLoginContainerDiv.appendChild(deleteLoginInputLabel);
-    deleteLoginContainerDiv.appendChild(deleteLoginInput);
-    deleteLoginContainerDiv.appendChild(deleteLoginButton);
-
-    // Add an event listener to the Delete Login button to handle login
-    deleteLoginButton.addEventListener("click", DeleteLoginIdInformation);
-}
-
-// Function to get Login information from input fields
-async function DeleteLoginIdInformation() {
-    let loginId = document.querySelector("#deleteLogin-input").value;
-
-    // Call the function to get the login from the system
-    await DeleteLoginById(loginId);
-    // GenerateAllLoginsContainer();
-}
-
-//Function to delete login
-async function DeleteLoginById(loginId) {
-    try 
-    {
-        let response = await fetch(`${BASE_URL}/Login/${loginId}`, { method: 'DELETE' });
-        if (response.ok) 
-            {
-                console.log("Login Id " + loginId + " was removed from the system")
-                alert("Login Id " + loginId + " was removed from the system");
-            }
-            else
-            {
-                alert("Login ID was not located please try again.");
-            }
-        }
-        catch (Error) {
-            console.error(Error);
-        }
 }
 
 //----------------------------------------------//
@@ -749,7 +867,7 @@ async function UpdatePerson(personId, personType, firstName, lastName, phoneNumb
 }
 
 //----------------------------------------------//
-// Delete Person Container Creation Functions  //
+// Delete Person Container Creation Functions   //
 //----------------------------------------------//
 
 // Function to build out the code for the container
@@ -904,93 +1022,6 @@ function TeardownPersonTableContainer() {
         }
     }
 }
-
-
-//----------------------------------------------//
-// List All Logins Container Creation Functions //
-//----------------------------------------------//
-
-// Function to build out the code for the container
-async function GenerateAllLoginsContainer() {
-
-    TeardownLoginTableContainer(); 
-
-    // Create Div to hold Header Text for table
-    let loginAllHeaderDiv = document.createElement("div");
-    loginAllHeaderDiv.id = "loginAllHeader-container";
-
-    // Create header for All Logins table 
-    let loginAllHeader = document.createElement("h2");
-    loginAllHeader.type = 'text';
-    loginAllHeader.setAttribute("style", "background-color: #eed5d7;");
-    loginAllHeader.textContent = "All Logins in the system";
-
-    allLoginsContainerDiv.appendChild(loginAllHeaderDiv);
-    loginAllHeaderDiv.appendChild(loginAllHeader);
-
-    let loginAllDiv = document.createElement("div");
-    loginAllDiv.id = "loginAll-container";
-    allLoginsContainerDiv.appendChild(loginAllDiv);
-
-    // Call to get a list of all Logins in the system
-    // then passed the list into the function that will 
-    // build and load a table with the data
-    let logins = await GetAllLogins();
-    loginAllDiv.innerHTML = GenerateLoginTable(logins);
-}
-
-// Function to get a list of all Logins in the system
-async function GetAllLogins() {
-    try {
-        let response = await fetch(`${BASE_URL}/Login`);
-        let data = await response.json();
-        console.log(data);
-        return data;
-    } catch (Error) {
-        console.error(Error);
-    }
-}
-
-// Function to build a table and then load it with the passed in data 
-function GenerateLoginTable(logins) {
-
-    // This line declairs a new table node/section in your HTML
-    let loginTable = '<table>';
-
-    // This section builds the Column Header Names
-    loginTable += `<tr>
-        <th>Person Id</th>
-        <th>User Name</th>
-        <th>Password</th>
-        </tr>`;
-
-    // This section adds the passed in data into the table
-    logins.forEach(l => {
-        loginTable += `<tr>
-        <td>${l.personId}</td>
-        <td>${l.userName}</td>
-        <td>${l.userPassword}</td>
-        </tr>`;
-    });
-
-    // This line closes out the table nod/section in your HTML
-    loginTable += '</table>';
-
-    return loginTable;
-}
-
-function TeardownLoginTableContainer() {
-    // Find the Display All Login container
-    let loginTableDiv = document.querySelector("#all-logins-container");
-
-    // If the Display All Login container exists, remove all its children
-    if (loginTableDiv != null) {
-        while (loginTableDiv.firstChild) {
-            loginTableDiv.firstChild.remove();
-        }
-    }
-}
-
 
 //-----------------------------------------------------//
 // Add New Pet Container Creation Functions            //
