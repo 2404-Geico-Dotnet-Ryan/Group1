@@ -20,6 +20,7 @@ namespace KittyCity.Services
             var logins = _context.Logins
                     .Select(l => new LoginDTO
                     {
+                        LoginId = l.LoginId,
                         UserName = l.UserName,
                         UserPassword = HidePassword(l.UserPassword),
                         PersonId = l.PersonId

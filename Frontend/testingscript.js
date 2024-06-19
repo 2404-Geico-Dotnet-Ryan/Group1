@@ -357,11 +357,11 @@ function GenerateUpdateLoginContainer() {
 
     let loginupdateIdInput = document.createElement('input');
     loginupdateIdInput.type = 'number';
-    loginupdateIdInput.id = 'updatelogin-personId-input';
+    loginupdateIdInput.id = 'updatelogin-loginId-input';
     loginupdateIdInput.style.display = 'block';
 
-    let personIdInputLabel = document.createElement('label');
-    personIdInputLabel.textContent = "Person ID";
+    let loginIdInputLabel = document.createElement('label');
+    loginIdInputLabel.textContent = "Login ID";
 
     // Create the UserName input field and label
     let userNameInput = document.createElement('input');
@@ -393,7 +393,7 @@ function GenerateUpdateLoginContainer() {
 
     // Append the Id, UserName and UserPassword fields and labels to the Login container
     updateLoginDiv.appendChild(updateLoginHeader);
-    updateLoginDiv.appendChild(personIdInputLabel);
+    updateLoginDiv.appendChild(loginIdInputLabel);
     updateLoginDiv.appendChild(loginupdateIdInput);
     updateLoginDiv.appendChild(userNameInputLabel);
     updateLoginDiv.appendChild(userNameInput);
@@ -406,7 +406,7 @@ function GenerateUpdateLoginContainer() {
 }
 
 async function GetUpdateLoginInformation() {
-    let personId = document.querySelector("#updatelogin-personId-input").value;
+    let personId = document.querySelector("#updatelogin-loginId-input").value;
     let username = document.querySelector("#update-username-input").value;
     let password = document.querySelector("#update-password-input").value;
 
@@ -558,7 +558,7 @@ function GenerateLoginTable(logins) {
 
     // This section builds the Column Header Names
     loginTable += `<tr>
-        <th>Person Id</th>
+        <th>Login Id</th>
         <th>User Name</th>
         <th>Encrypted Password</th>
         </tr>`;
@@ -566,7 +566,7 @@ function GenerateLoginTable(logins) {
     // This section adds the passed in data into the table
     logins.forEach(l => {
         loginTable += `<tr>
-        <td>${l.personId}</td>
+        <td>${l.loginId}</td>
         <td>${l.userName}</td>
         <td>${l.userPassword}</td>
         </tr>`;
