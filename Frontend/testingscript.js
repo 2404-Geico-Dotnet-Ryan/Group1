@@ -196,7 +196,7 @@ function GenerateHomePageContainer() {
 //---------------------------------------------//
 
 // Function to build out the code for the container
-function GenerateNewLoginContainerLevelmTwo() {
+function GenerateNewLoginContainerLevelTwo() {
     // Create the new Login container div
     let loginDiv = document.createElement("div");
     loginDiv.id = "newlogin-container";
